@@ -5,6 +5,7 @@
 #ifndef headfiles
 #define headfiles
     #include <iostream>
+    #include <fstream>
     #include <cstdio>
     #include <cstdlib>
     #include <cctype>
@@ -48,5 +49,6 @@
 void PrintAuthorInfo(void);
 void InitVariables(void);
 void GetInput(void);
+void FileTest(void);
 void PrintOutput(void);
 void PrintBye(void);

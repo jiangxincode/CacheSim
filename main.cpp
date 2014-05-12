@@ -10,6 +10,7 @@ do
 {
     InitVariables();
     GetInput(); // get input information
+    FileTest();
     PrintOutput(); // output the result
     cout << "Continue/Exit(C/E)" << endl;
     cin >> ch;

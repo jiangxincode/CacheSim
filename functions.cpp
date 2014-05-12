@@ -128,6 +128,29 @@ get_write:
             goto get_write;
     }
 }
+void FileTest(void)
+{
+    char filepath[100];
+    ifstream in_file;
+    char address[13];
+    cout << "\nPlease input the path and name that you want to test!" << endl;
+    cout << "\n\t C:\\temp\\myfile.trace" << endl;
+    cout << "\n\t myfile.trace" << endl;
+    cin >> filepath;
+    in_file.open(filepath,ios::in);
+    while(in_file.fail())
+    {
+        cout << "Open ERROR! Please Check the Path and Name, and Input again!" << endl;
+        cin >> filepath;
+        in_file.open(filepath,ios::in);
+    }
+    while(!in_file.eof())
+    {
+            in_file.getline(address,13);
+            cout << address << endl;
+    }
+
+}
 void PrintOutput(void)
 {
     cout << endl;
