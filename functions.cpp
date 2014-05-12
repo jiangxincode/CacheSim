@@ -32,7 +32,7 @@ void InitVariables(void)
     i_cache_size = 32; //cache size,defalut 32KB
     i_cache_line_size = 16; //cacheline size,default 16Byte
     t_assoc = direct_mapped; //associativity method,default direct_mapped
-    t_replace = Random; //replacement policy,default Random
+    t_replace = none; //replacement policy,default Random
     t_write = write_back; //write policy,default write_back
     /* for input */
     /******************************************/
@@ -42,9 +42,16 @@ void InitVariables(void)
     i_num_access = 0; //Number of cache access
     i_num_load = 0; //Number of cache load
     i_num_store = 0; //Number of cache store
+
+    i_num_hit = 0; //Number of cache hit
+    i_num_load_hit = 0; //Number of load hit
+    i_num_store_hit = 0; //Number of store hit
+
     f_ave_rate = 0.0; //Average cache hit rate
     f_load_rate = 0.0; //Cache hit rate for loads
     f_store_rate = 0.0; //Cache hit rate for stores
+
+    i_num_space = 0; //Number of space line
     /* for output */
     /******************************************/
 }
@@ -72,6 +79,11 @@ get_assoc:
         default:
             cout << "Input Error!Please input again:" << endl;
             goto get_assoc;
+    }
+    if(t_assoc == direct_mapped) //If the associativity_way is direct_mapped,the replacement polacy can be none only;
+    {
+        t_replace = none;
+        goto get_write;
     }
 
 get_replacement:
@@ -108,6 +120,11 @@ get_write:
             goto get_write;
     }
 }
+
+void CalcInfo()
+{
+
+}
 void FileTest(void)
 {
     char filepath[100];
@@ -126,12 +143,16 @@ void FileTest(void)
     }
     while(!in_file.eof())
     {
-            in_file.getline(address,13);
-            assert(SumCache(address) == true);
-            //cout << address << endl;
+        bool is_success;
+        in_file.getline(address,13);
+        is_success = GetHitNum(address);
+        assert(is_success);
+        //cout << address << endl;
     }
+    GetHitRate();
 
 }
+
 void PrintOutput(void)
 {
     cout << endl;
@@ -147,6 +168,7 @@ void PrintOutput(void)
     }
     switch(t_replace)
     {
+        case 0:cout << "Way of Replacement:NONE" << endl;break;
         case 1:cout << "Way of Replacement:FIFO" << endl;break;
         case 2:cout << "Way of Replacement:LRU" << endl;break;
         case 3:cout << "Way of Replacement:LFU" << endl;break;
@@ -164,7 +186,7 @@ void PrintOutput(void)
     cout << endl;
     cout << "Number of cache access:" << i_num_access << endl;
     cout << "Number of cache load:" << i_num_load << endl;
-    cout << "Number of cache store" << i_num_store << endl;
+    cout << "Number of cache store:" << i_num_store << endl;
     cout << endl;
     cout << "Average cache hit rate:" << f_ave_rate/100 << "%" << endl;
     cout << "Cache hit rate for loads:" << f_load_rate/100 << "%" << endl;

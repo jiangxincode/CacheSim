@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-    #ifdef NDBUG
+    #ifdef NDEBUG
     PrintAuthorInfo();
     #endif // NDBUG
 
@@ -17,6 +17,7 @@ do
     GetInput(); // get input information
     #endif // NDEBUG
 
+    CalcInfo();
     FileTest();
     PrintOutput(); // output the result
     cout << "Continue/Exit(C/E)" << endl;
