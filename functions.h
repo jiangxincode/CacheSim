@@ -1,10 +1,13 @@
 //functions.h
 
+#define _windows_
+
 #ifndef headfiles
 #define headfiles
     #include <iostream>
     #include <cstdio>
     #include <cstdlib>
+    #include <cctype>
 #endif
 
 #ifndef types
@@ -21,10 +24,29 @@
     typedef enum write_way WRITE;
 #endif // types
 
+    /******************************************/
+    /* for input */
+    extern int i_cache_size; //cache size
+    extern int i_cache_line_size; //cacheline size
+    extern ASSOC t_assoc; //associativity method
+    extern REPLACE t_replace; //replacement policy
+    extern WRITE t_write; //write policy
+    /* for input */
+    /******************************************/
+
+    /******************************************/
+    /* for output */
+    extern int i_num_access; //Number of cache access
+    extern int i_num_load; //Number of cache load
+    extern int i_num_store; //Number of cache store
+    extern float f_ave_rate; //Average cache hit rate
+    extern float f_load_rate; //Cache hit rate for loads
+    extern float f_store_rate; //Cache hit rate for stores
+    /* for output */
+    /******************************************/
+
 void PrintAuthorInfo(void);
-void GetInput(int& i_cache_size,int& i_cache_line_size,ASSOC& t_assoc,REPLACE& t_replace,WRITE& t_write);
-void PrintOutput(int i_cache_size,int i_cache_line_size,
-                 ASSOC t_assoc,REPLACE t_replace,WRITE t_write,
-                 int i_num_access,int i_num_load,int i_num_store,
-                 float f_ave_rate,float f_load_rate,float f_store_rate);
-void PrintBye();
+void InitVariables(void);
+void GetInput(void);
+void PrintOutput(void);
+void PrintBye(void);

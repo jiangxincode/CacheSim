@@ -2,6 +2,27 @@
 
 using namespace std;
 
+    /******************************************/
+    /* for input */
+    int i_cache_size = 0; //cache size
+    int i_cache_line_size = 0; //cacheline size
+    ASSOC t_assoc = direct_mapped; //associativity method,default direct_mapped
+    REPLACE t_replace = Random; //replacement policy,default Random
+    WRITE t_write = write_back; //write policy,default write_back
+    /* for input */
+    /******************************************/
+
+    /******************************************/
+    /* for output */
+    int i_num_access = 0; //Number of cache access
+    int i_num_load = 0; //Number of cache load
+    int i_num_store = 0; //Number of cache store
+    float f_ave_rate = 0.0; //Average cache hit rate
+    float f_load_rate = 0.0; //Cache hit rate for loads
+    float f_store_rate = 0.0; //Cache hit rate for stores
+    /* for output */
+    /******************************************/
+
 void PrintAuthorInfo(void)
 {
     cout << "NAME:CacheSim" << endl;
@@ -11,18 +32,43 @@ void PrintAuthorInfo(void)
     cout << "Copyright (c) 2014, jiangxin" << endl;
     cout << "All rights reserved." << endl;
     cout << endl;
-//    puts("Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:");
-//    puts("Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.");
-//    puts("Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.");
-//    puts("Neither the name of the jiangxin nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.");
-//    puts("THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.");
-    cout << endl;
-}
-void InitVariable(void)
-{
 
+    cout << "Do you want to see the detail infomation about the program(Y/N):" << endl;
+    char ch = tolower(getchar());
+    if(ch == 'y')
+    {
+        #ifdef _windows_
+            system("notepad.exe README.txt");
+        #endif
+        #ifdef _linux_
+            system("vim README.txt");
+        #endif
+    }
 }
-void GetInput(int& i_cache_size,int& i_cache_line_size,ASSOC& t_assoc,REPLACE& t_replace,WRITE& t_write)
+void InitVariables(void)
+{
+    /******************************************/
+    /* for input */
+    i_cache_size = 32; //cache size,defalut 32KB
+    i_cache_line_size = 16; //cacheline size,default 16Byte
+    t_assoc = direct_mapped; //associativity method,default direct_mapped
+    t_replace = Random; //replacement policy,default Random
+    t_write = write_back; //write policy,default write_back
+    /* for input */
+    /******************************************/
+
+    /******************************************/
+    /* for output */
+    i_num_access = 0; //Number of cache access
+    i_num_load = 0; //Number of cache load
+    i_num_store = 0; //Number of cache store
+    f_ave_rate = 0.0; //Average cache hit rate
+    f_load_rate = 0.0; //Cache hit rate for loads
+    f_store_rate = 0.0; //Cache hit rate for stores
+    /* for output */
+    /******************************************/
+}
+void GetInput(void)
 {
     int temp = 0; //for switch
     puts("\nPlease input the number of the cache size(Unit:KB):(for example:32)");
@@ -82,10 +128,7 @@ get_write:
             goto get_write;
     }
 }
-void PrintOutput(int i_cache_size,int i_cache_line_size,
-                 ASSOC t_assoc,REPLACE t_replace,WRITE t_write,
-                 int i_num_access,int i_num_load,int i_num_store,
-                 float f_ave_rate,float f_load_rate,float f_store_rate)
+void PrintOutput(void)
 {
     cout << endl;
     cout << "Cache Size:" << i_cache_size << endl;
@@ -124,7 +167,7 @@ void PrintOutput(int i_cache_size,int i_cache_line_size,
     cout << "Cache hit rate for stores:" << f_store_rate/100 << "%" << endl;
     cout << endl;
 }
-void PrintBye()
+void PrintBye(void)
 {
     puts("\nThanks for your use!");
 }

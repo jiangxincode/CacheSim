@@ -1,12 +1,13 @@
 # depslib dependency file v1.0
-1399825131 source:e:\temp\cachesim\main.cpp
+1399864505 source:e:\temp\cachesim\main.cpp
 	"functions.h"
 
-1399828007 e:\temp\cachesim\functions.h
+1399864635 e:\temp\cachesim\functions.h
 	<iostream>
 	<cstdio>
 	<cstdlib>
+	<cctype>
 
-1399827869 source:e:\temp\cachesim\functions.cpp
+1399864679 source:e:\temp\cachesim\functions.cpp
 	"functions.h"
 
