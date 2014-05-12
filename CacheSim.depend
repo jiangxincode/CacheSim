@@ -8,9 +8,10 @@
 1399908758 source:e:\temp\cachesim\functions.cpp
 	"functions.h"
 
-1399908776 e:\temp\cachesim\base.h
+1399911705 e:\temp\cachesim\base.h
 	<iostream>
 	<fstream>
+	<bitset>
 	<cassert>
 	<cstdio>
 	<cstdlib>

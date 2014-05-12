@@ -87,7 +87,8 @@ bool GetHitNum(char *address)
     {
         cout << "There have " << i_num_space << "space lines" << endl;
     }
-
+    bitset<32> flags(atoi(address+4));
+    cout << flags << endl;
     return true;
 }
 void GetHitRate()

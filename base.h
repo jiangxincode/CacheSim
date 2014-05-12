@@ -7,6 +7,7 @@
 #define headfiles
     #include <iostream>
     #include <fstream>
+    #include <bitset>
     #include <cassert>
     #include <cstdio>
     #include <cstdlib>
