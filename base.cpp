@@ -104,3 +104,11 @@ bool IsHit()
 {
     return false;
 }
+void GetReplace()
+{
+
+}
+void GetWrite()
+{
+
+}

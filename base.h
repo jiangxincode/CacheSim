@@ -58,3 +58,5 @@
 bool GetHitNum(char *address);
 void GetHitRate(void);
 bool IsHit();
+void GetReplace();
+void GetWrite();

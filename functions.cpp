@@ -143,10 +143,12 @@ void FileTest(void)
     }
     while(!in_file.eof())
     {
-        bool is_success;
         in_file.getline(address,13);
+        bool __attribute__((unused)) is_success = false; //in case of the warning of "Wunused-but-set-variable"
         is_success = GetHitNum(address);
         assert(is_success);
+        GetReplace();
+        GetWrite();
         //cout << address << endl;
     }
     GetHitRate();
