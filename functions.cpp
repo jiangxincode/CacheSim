@@ -1,27 +1,7 @@
+//functions.cpp
 #include "functions.h"
 
 using namespace std;
-
-    /******************************************/
-    /* for input */
-    int i_cache_size = 0; //cache size
-    int i_cache_line_size = 0; //cacheline size
-    ASSOC t_assoc = direct_mapped; //associativity method,default direct_mapped
-    REPLACE t_replace = Random; //replacement policy,default Random
-    WRITE t_write = write_back; //write policy,default write_back
-    /* for input */
-    /******************************************/
-
-    /******************************************/
-    /* for output */
-    int i_num_access = 0; //Number of cache access
-    int i_num_load = 0; //Number of cache load
-    int i_num_store = 0; //Number of cache store
-    float f_ave_rate = 0.0; //Average cache hit rate
-    float f_load_rate = 0.0; //Cache hit rate for loads
-    float f_store_rate = 0.0; //Cache hit rate for stores
-    /* for output */
-    /******************************************/
 
 void PrintAuthorInfo(void)
 {
@@ -147,7 +127,8 @@ void FileTest(void)
     while(!in_file.eof())
     {
             in_file.getline(address,13);
-            cout << address << endl;
+            assert(SumCache(address) == true);
+            //cout << address << endl;
     }
 
 }
