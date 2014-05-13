@@ -16,6 +16,15 @@ using namespace std;
     /******************************************/
 
     /******************************************/
+    /* for temp */
+    unsigned int i_num_line = 0; //How many lines of the cache.
+    short unsigned int bit_block = 0; //How many bits of the block.
+    short unsigned int bit_line = 0; //How many bits of the line.
+    short unsigned int bit_tag = 0; //How many bits of the tag.
+    /* for temp */
+    /******************************************/
+
+    /******************************************/
     /* for output */
     unsigned long int i_num_access = 0; //Number of cache access
     unsigned long int i_num_load = 0; //Number of cache load
@@ -32,6 +41,9 @@ using namespace std;
     unsigned long int i_num_space = 0; //Number of space line
     /* for output */
     /******************************************/
+    bitset<10> cache_item[MAX_CACHE_LINE];
+    bitset<10> *p_cache_item;
+
 
 
 bool GetHitNum(char *address)

@@ -3,32 +3,30 @@
 	<ActiveTarget name="Debug" />
 	<File name="functions.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4722" topLine="47" />
+			<Cursor1 position="7603" topLine="156" />
 		</Cursor>
 		<Folding>
-			<Collapse line="28" />
-			<Collapse line="58" />
-			<Collapse line="198" />
+			<Collapse line="68" />
 		</Folding>
-	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="283" topLine="9" />
-		</Cursor>
 	</File>
 	<File name="functions.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="52" topLine="0" />
+			<Cursor1 position="205" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="base.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3589" topLine="105" />
 		</Cursor>
 	</File>
 	<File name="base.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="156" topLine="0" />
+			<Cursor1 position="2656" topLine="52" />
 		</Cursor>
 	</File>
-	<File name="base.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2787" topLine="79" />
+			<Cursor1 position="480" topLine="9" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

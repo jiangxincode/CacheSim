@@ -18,6 +18,7 @@ do
     #endif // NDEBUG
 
     CalcInfo();
+    CreateCache();
     FileTest();
     PrintOutput(); // output the result
     cout << "Continue/Exit(C/E)" << endl;

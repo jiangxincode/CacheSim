@@ -29,12 +29,22 @@ void InitVariables(void)
 {
     /******************************************/
     /* for input */
-    i_cache_size = 32; //cache size,defalut 32KB
-    i_cache_line_size = 16; //cacheline size,default 16Byte
+    i_cache_size = 32; //cache size
+    i_cache_line_size = 16; //cacheline size
+
     t_assoc = direct_mapped; //associativity method,default direct_mapped
     t_replace = none; //replacement policy,default Random
     t_write = write_back; //write policy,default write_back
     /* for input */
+    /******************************************/
+
+    /******************************************/
+    /* for temp */
+    i_num_line = 0; //How many lines of the cache.
+    bit_block = 0; //How many bits of the block.
+    bit_line = 0; //How many bits of the line.
+    bit_tag = 0; //How many bits of the tag.
+    /* for temp */
     /******************************************/
 
     /******************************************/
@@ -53,6 +63,8 @@ void InitVariables(void)
 
     i_num_space = 0; //Number of space line
     /* for output */
+
+    p_cache_item = cache_item;
     /******************************************/
 }
 void GetInput(void)
@@ -123,21 +135,20 @@ get_write:
 
 void CalcInfo()
 {
-    unsigned int i_num_line = 0;
+
     assert(i_cache_line_size != 0);
     i_num_line = (i_cache_size<<10)/i_cache_line_size;
-    short unsigned int bit_block = 0;
-    short unsigned int bit_line = 0;
-    short unsigned int bit_tag = 0;
-    while(i_cache_line_size)
+    unsigned long int temp = i_cache_line_size;
+    while(temp)
     {
-        i_cache_line_size >>= 1;
+        temp >>= 1;
         bit_block++;
     }
     bit_block--; //warning
-    while(i_num_line)
+    temp = i_num_line;
+    while(temp)
     {
-        i_num_line >>= 1;
+        temp >>= 1;
         bit_line++;
     }
     bit_line--; //warning
@@ -145,6 +156,15 @@ void CalcInfo()
     cout << "bit_block:" << bit_block << endl;
     cout << "bit_line:" << bit_line << endl;
     cout << "bit_tag:" << bit_tag << endl;
+}
+void CreateCache()
+{
+    unsigned long int temp = i_num_line;
+    cout << "temp = " << temp <<endl;
+    for(unsigned long i=0;i<temp;i++)
+    {
+        cout << cache_item[0] << endl;
+    }
 }
 void FileTest(void)
 {

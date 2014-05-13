@@ -1,7 +1,7 @@
 //base.h
 
 #define _windows_
-#define NDEBUG
+//#define NDEBUG
 
 #ifndef headfiles
 #define headfiles
@@ -12,7 +12,10 @@
     #include <cstdio>
     #include <cstdlib>
     #include <cctype>
+    #include <cmath>
 #endif
+
+#define MAX_CACHE_LINE 1000000
 
 #ifndef types
 #define types
@@ -40,6 +43,15 @@
     /******************************************/
 
     /******************************************/
+    /* for temp */
+    extern unsigned int i_num_line; //How many lines of the cache.
+    extern short unsigned int bit_block; //How many bits of the block.
+    extern short unsigned int bit_line; //How many bits of the line.
+    extern short unsigned int bit_tag; //How many bits of the tag.
+    /* for temp */
+    /******************************************/
+
+    /******************************************/
     /* for output */
     extern unsigned long int i_num_access; //Number of cache access
     extern unsigned long int i_num_load; //Number of cache load
@@ -56,6 +68,8 @@
     extern unsigned long int i_num_space; //Number of space line
     /* for output */
     /******************************************/
+    extern std::bitset<10> cache_item[MAX_CACHE_LINE],*p_cache_item;
+
 
 bool GetHitNum(char *address);
 void GetHitRate(void);
