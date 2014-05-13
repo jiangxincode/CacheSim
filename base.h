@@ -1,7 +1,7 @@
 //base.h
 
 #define _windows_
-//#define NDEBUG
+#define NDEBUG
 
 #ifndef headfiles
 #define headfiles
@@ -68,11 +68,11 @@
     extern unsigned long int i_num_space; //Number of space line
     /* for output */
     /******************************************/
-    extern std::bitset<10> cache_item[MAX_CACHE_LINE],*p_cache_item;
+    extern std::bitset<32> cache_item[MAX_CACHE_LINE],*p_cache_item;
 
 
 bool GetHitNum(char *address);
 void GetHitRate(void);
-bool IsHit();
-void GetReplace();
+bool IsHit(std::bitset<32> flags);
+void GetReplace(std::bitset<32> flags);
 void GetWrite();

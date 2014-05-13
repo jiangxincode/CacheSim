@@ -41,8 +41,11 @@ using namespace std;
     unsigned long int i_num_space = 0; //Number of space line
     /* for output */
     /******************************************/
-    bitset<10> cache_item[MAX_CACHE_LINE];
-    bitset<10> *p_cache_item;
+    bitset<32> cache_item[MAX_CACHE_LINE];
+    // cache_item[0]:hit,cache item[1]:dirty,
+    bitset<32> *p_cache_item;
+    unsigned long int line;
+    unsigned long int i=0,j=0;
 
 
 
@@ -64,14 +67,26 @@ bool GetHitNum(char *address)
     }
     unsigned long value = strtoul(address+2,NULL,16);
     bitset<32> flags(value);
+
+    #ifndef NDEBUG
     cout << flags << endl;
-    hit = IsHit();
+    #endif // NDEBUG
+
+
+    hit = IsHit(flags);
     if(hit && is_load)
     {
         i_num_access++;
         i_num_load++;
         i_num_load_hit++;
         i_num_hit++;
+
+        #ifndef NDEBUG
+        cout << "Loading" << endl;
+        cout << "Hit" << endl;
+        cout << "Read from Cache!" << endl;
+        #endif // NDEBUG
+
     }
     else if(hit && is_store)
     {
@@ -79,16 +94,50 @@ bool GetHitNum(char *address)
         i_num_store++;
         i_num_store_hit++;
         i_num_hit++;
+
+        #ifndef NDEBUG
+        cout << "Storing" << endl;
+        cout << "Hit" << endl;
+        cout << "Write to Cache" << endl;
+        #endif // NDEBUG
     }
     else if(is_load)
     {
         i_num_access++;
         i_num_load++;
+
+        #ifndef NDEBUG
+        cout << "Loading" << endl;
+        cout << "Not Hit" << endl;
+        cout << "Read from Main Memory to Cache!" << endl;
+        #endif // NDEBUG
+
+        GetReplace(flags);
+
+        #ifndef NDEBUG
+        cout << "Read from Cache!" << endl;
+        #endif // NDEBUG
     }
     else if(is_store)
     {
         i_num_access++;
         i_num_store++;
+
+        #ifndef NDEBUG
+        cout << "Storing" << endl;
+        cout << "Not Hit" << endl;
+        #endif // NDEBUG
+
+        GetWrite(); //写入内存
+
+        #ifndef NDEBUG
+        cout << "Read from Main Memory to Cache!" << endl;
+        #endif // NDEBUG
+
+        GetReplace(flags);
+        #ifndef NDEBUG
+        cout << "Write to Cache" << endl;
+        #endif // NDEBUG
     }
     else if(is_space)
     {
@@ -115,15 +164,49 @@ void GetHitRate()
     f_store_rate = ((double)i_num_store_hit)/i_num_store; //Cache hit rate for stores
 }
 
-bool IsHit()
+bool IsHit(bitset<32> flags)
 {
-    return false;
-}
-void GetReplace()
-{
+    bool ret = false;
+    bitset<32> flags_line;
+    for(j=0,i=(bit_block);i<(bit_block+bit_line);j++,i++) //判断在cache多少行
+    {
+        flags_line[j] = flags[i];
+        //cout << "i is: " << i << endl;
+    }
+    line = flags_line.to_ulong();
+    //cout << "line is: " << line << endl;
+    if(cache_item[line][31]==false) //判断是否超出cache的有效行数
+    {
+        cerr << "There is a error! Beyond the range!!" << endl;
+        cout << "Line is: " << line << endl;
+    }
+    if(cache_item[line][30]==true) //判断hit位是否为真
+    {
+        for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //判断标记是否相同
+        {
+            ret = true;
+            if(flags[i] != cache_item[line][j])
+            {
+                ret = false;
+            }
+        }
+    }
 
+    return ret;
 }
-void GetWrite()
+void GetReplace(bitset<32> flags)
 {
-
+    for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //设置标记
+    {
+        cache_item[line][j] = flags[i];
+    }
+    cache_item[line][30] = true; //设置hit位为true
+}
+void GetWrite() //写入内存
+{
+    if(cache_item[line][30] == true && cache_item[line][29] == true) //hit位和dirty位必须同时为1才写入
+    {
+        cout << "Writing to the Main Memory!" <<endl;
+    }
+    cache_item[line][29] = false; //设置dirty为false
 }

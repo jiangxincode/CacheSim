@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="functions.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7603" topLine="156" />
-		</Cursor>
-		<Folding>
-			<Collapse line="68" />
-		</Folding>
-	</File>
 	<File name="functions.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="205" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="base.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3589" topLine="105" />
-		</Cursor>
-	</File>
-	<File name="base.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2656" topLine="52" />
+			<Cursor1 position="159" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="480" topLine="9" />
+			<Cursor1 position="303" topLine="7" />
+		</Cursor>
+	</File>
+	<File name="functions.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5163" topLine="71" />
+		</Cursor>
+		<Folding>
+			<Collapse line="70" />
+			<Collapse line="136" />
+			<Collapse line="206" />
+		</Folding>
+	</File>
+	<File name="base.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5113" topLine="168" />
+		</Cursor>
+	</File>
+	<File name="base.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="181" topLine="9" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

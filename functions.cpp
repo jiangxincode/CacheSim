@@ -163,7 +163,15 @@ void CreateCache()
     cout << "temp = " << temp <<endl;
     for(unsigned long i=0;i<temp;i++)
     {
-        cout << cache_item[0] << endl;
+        //cout << cache_item[i] << endl;
+    }
+    for(unsigned long i=0;i<temp;i++)
+    {
+        cache_item[i][31] = true;
+    }
+    for(unsigned long i=0;i<temp;i++)
+    {
+        //cout << cache_item[i] << endl;
     }
 }
 void FileTest(void)
@@ -188,8 +196,7 @@ void FileTest(void)
         bool __attribute__((unused)) is_success = false; //in case of the warning of "Wunused-but-set-variable"
         is_success = GetHitNum(address);
         assert(is_success);
-        GetReplace();
-        GetWrite();
+
         //cout << address << endl;
     }
     GetHitRate();
