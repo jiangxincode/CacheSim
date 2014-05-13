@@ -6,8 +6,9 @@ using namespace std;
 
     /******************************************/
     /* for input */
-    int i_cache_size = 0; //cache size
-    int i_cache_line_size = 0; //cacheline size
+    unsigned int i_cache_size = 0; //cache size
+    unsigned int i_cache_line_size = 0; //cacheline size
+
     ASSOC t_assoc = direct_mapped; //associativity method,default direct_mapped
     REPLACE t_replace = none; //replacement policy,default Random
     WRITE t_write = write_back; //write policy,default write_back
@@ -16,19 +17,19 @@ using namespace std;
 
     /******************************************/
     /* for output */
-    long int i_num_access = 0; //Number of cache access
-    long int i_num_load = 0; //Number of cache load
-    long int i_num_store = 0; //Number of cache store
+    unsigned long int i_num_access = 0; //Number of cache access
+    unsigned long int i_num_load = 0; //Number of cache load
+    unsigned long int i_num_store = 0; //Number of cache store
 
-    long int i_num_hit = 0; //Number of cache hit
-    long int i_num_load_hit = 0; //Number of load hit
-    long int i_num_store_hit = 0; //Number of store hit
+    unsigned long int i_num_hit = 0; //Number of cache hit
+    unsigned long int i_num_load_hit = 0; //Number of load hit
+    unsigned long int i_num_store_hit = 0; //Number of store hit
 
     float f_ave_rate = 0.0; //Average cache hit rate
     float f_load_rate = 0.0; //Cache hit rate for loads
     float f_store_rate = 0.0; //Cache hit rate for stores
 
-    long int i_num_space = 0; //Number of space line
+    unsigned long int i_num_space = 0; //Number of space line
     /* for output */
     /******************************************/
 
@@ -49,6 +50,9 @@ bool GetHitNum(char *address)
             cout << "The address[0] is:" <<address[0] << endl;
             cout << "ERROR IN JUDGE!" << endl;return false;
     }
+    unsigned long value = strtoul(address+2,NULL,16);
+    bitset<32> flags(value);
+    cout << flags << endl;
     hit = IsHit();
     if(hit && is_load)
     {
@@ -87,8 +91,6 @@ bool GetHitNum(char *address)
     {
         cout << "There have " << i_num_space << "space lines" << endl;
     }
-    bitset<32> flags(atoi(address+4));
-    cout << flags << endl;
     return true;
 }
 void GetHitRate()

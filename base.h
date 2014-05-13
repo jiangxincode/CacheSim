@@ -30,8 +30,9 @@
 
     /******************************************/
     /* for input */
-    extern int i_cache_size; //cache size
-    extern int i_cache_line_size; //cacheline size
+    extern unsigned int i_cache_size; //cache size
+    extern unsigned int i_cache_line_size; //cacheline size
+
     extern ASSOC t_assoc; //associativity method
     extern REPLACE t_replace; //replacement policy
     extern WRITE t_write; //write policy
@@ -40,19 +41,19 @@
 
     /******************************************/
     /* for output */
-    extern long int i_num_access; //Number of cache access
-    extern long int i_num_load; //Number of cache load
-    extern long int i_num_store; //Number of cache store
+    extern unsigned long int i_num_access; //Number of cache access
+    extern unsigned long int i_num_load; //Number of cache load
+    extern unsigned long int i_num_store; //Number of cache store
 
-    extern long int i_num_hit; //Number of cache hit
-    extern long int i_num_load_hit; //Number of load hit
-    extern long int i_num_store_hit; //Number of store hit
+    extern unsigned long int i_num_hit; //Number of cache hit
+    extern unsigned long int i_num_load_hit; //Number of load hit
+    extern unsigned long int i_num_store_hit; //Number of store hit
 
     extern float f_ave_rate; //Average cache hit rate
     extern float f_load_rate; //Cache hit rate for loads
     extern float f_store_rate; //Cache hit rate for stores
 
-    extern long int i_num_space; //Number of space line
+    extern unsigned long int i_num_space; //Number of space line
     /* for output */
     /******************************************/
 

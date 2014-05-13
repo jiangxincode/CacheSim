@@ -123,7 +123,28 @@ get_write:
 
 void CalcInfo()
 {
-
+    unsigned int i_num_line = 0;
+    assert(i_cache_line_size != 0);
+    i_num_line = (i_cache_size<<10)/i_cache_line_size;
+    short unsigned int bit_block = 0;
+    short unsigned int bit_line = 0;
+    short unsigned int bit_tag = 0;
+    while(i_cache_line_size)
+    {
+        i_cache_line_size >>= 1;
+        bit_block++;
+    }
+    bit_block--; //warning
+    while(i_num_line)
+    {
+        i_num_line >>= 1;
+        bit_line++;
+    }
+    bit_line--; //warning
+    bit_tag = 32ul - bit_block - bit_line;
+    cout << "bit_block:" << bit_block << endl;
+    cout << "bit_line:" << bit_line << endl;
+    cout << "bit_tag:" << bit_tag << endl;
 }
 void FileTest(void)
 {
