@@ -2,6 +2,12 @@
 
 #include "base.h"
 
+bool GetHitNum(char *address);
+void GetHitRate(void);
+bool IsHit(std::bitset<32> flags);
+void GetReplace(std::bitset<32> flags);
+void GetWrite();
+
 void PrintAuthorInfo(void);
 void InitVariables(void);
 void GetInput(void);

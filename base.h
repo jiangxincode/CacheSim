@@ -70,10 +70,5 @@
     /* for output */
     /******************************************/
     extern std::bitset<32> cache_item[MAX_CACHE_LINE],*p_cache_item;
-
-
-bool GetHitNum(char *address);
-void GetHitRate(void);
-bool IsHit(std::bitset<32> flags);
-void GetReplace(std::bitset<32> flags);
-void GetWrite();
+    extern unsigned long int line;
+    extern unsigned long int i,j;
