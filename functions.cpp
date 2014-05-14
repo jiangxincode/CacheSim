@@ -1,11 +1,16 @@
-//functions.cpp
+/*************************************************
+// functions.cpp
+// 1.Defination of almost all functions.
+*************************************************/
 
 #include "functions.h"
+#include "jiangxin.h"
 
 using namespace std;
 
 void PrintAuthorInfo(void)
 {
+    cout << endl;
     cout << "NAME:CacheSim" << endl;
     cout << "FUNCTION:Simulate the functions of Cache" << endl;
     cout << "VERAION:0.01" << endl;
@@ -14,8 +19,13 @@ void PrintAuthorInfo(void)
     cout << "All rights reserved." << endl;
     cout << endl;
 
-    cout << "Do you want to see the detail infomation about the program(Y/N):" << endl;
-    char ch = tolower(getchar());
+    cout << "Do you want to see the detail infomation about the program(Y/N): ";
+    char ch = jx_getchar((short)1);
+    while((ch!='y') && (ch!= 'n'))
+    {
+        cout << "Invalid Input,Please Input Again! ";
+        ch = jx_getchar((short)1);
+    }
     if(ch == 'y')
     {
         #ifdef _windows_
@@ -28,31 +38,28 @@ void PrintAuthorInfo(void)
 }
 void InitVariables(void)
 {
+    unsigned long int temp = i_num_line;
     /******************************************/
-    /* for input */
     i_cache_size = 32; //cache size
     i_cache_line_size = 16; //cacheline size
+    i_num_line = 0; //How many lines of the cache.
 
     t_assoc = direct_mapped; //associativity method,default direct_mapped
     t_replace = none; //replacement policy,default Random
     t_write = write_back; //write policy,default write_back
-    /* for input */
     /******************************************/
 
     /******************************************/
-    /* for temp */
-    i_num_line = 0; //How many lines of the cache.
     bit_block = 0; //How many bits of the block.
     bit_line = 0; //How many bits of the line.
     bit_tag = 0; //How many bits of the tag.
-    /* for temp */
     /******************************************/
 
     /******************************************/
-    /* for output */
     i_num_access = 0; //Number of cache access
     i_num_load = 0; //Number of cache load
     i_num_store = 0; //Number of cache store
+    i_num_space = 0; //Number of space line
 
     i_num_hit = 0; //Number of cache hit
     i_num_load_hit = 0; //Number of load hit
@@ -61,21 +68,43 @@ void InitVariables(void)
     f_ave_rate = 0.0; //Average cache hit rate
     f_load_rate = 0.0; //Cache hit rate for loads
     f_store_rate = 0.0; //Cache hit rate for stores
-
-    i_num_space = 0; //Number of space line
-    /* for output */
-
-    //p_cache_item = cache_item;
+    /******************************************/
+    for(i=0;i<temp;i++)
+    {
+    	cache_item[i].reset(31); // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
+    }
+    line = 0; // The line num which is processing
+    i=0;j=0; //For loop
     /******************************************/
 }
 void GetInput(void)
 {
-    int temp = 0; //for switch
-    puts("\nPlease input the number of the cache size(Unit:KB):(for example:32)");
-    cin >> i_cache_size;
+    short temp = 0; //for switch
 
-    puts("\nPlease input the number of the cacheline size(Unit:Byte):(for example:16)");
+    puts("\nPlease input the number of the cache size(Unit:KB)");
+    puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
+
+// temp
+    cin >> i_cache_size;
+    while(i_cache_size<1 || i_cache_size>= 262144 || (i_cache_size&(~i_cache_size+1))!=i_cache_size)
+    {
+        puts("\nPlease input the number of the cache size(Unit:KB)");
+        puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
+        cin >> i_cache_size;
+    }
+
+    puts("\nPlease input the number of the cacheline size(Unit:Byte)");
+    puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
+
+// temp
     cin >> i_cache_line_size;
+    while(i_cache_line_size<1 || i_cache_line_size>= 262144 || (i_cache_line_size&(~i_cache_line_size+1))!=i_cache_line_size)
+    {
+        puts("\nPlease input the number of the cache size(Unit:KB)");
+        puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
+        cin >> i_cache_line_size;
+    }
+
 
 get_assoc:
     puts("\nPlease input the method of assoiativity between main memory and cache:");
@@ -83,7 +112,8 @@ get_assoc:
     puts("\n\t set_associative:input 2");
     puts("\n\t full_associative:input 3");
     //cin >> t_assoc; //for ">>" doesn't overload,so it a error method
-    scanf("%d",&temp);
+// temp
+    scanf("%hd",&temp);
     switch(temp)
     {
         case 1:t_assoc = direct_mapped;break;
@@ -105,8 +135,9 @@ get_replacement:
     puts("\n\t LRU(Least Recently Used):input 2");
     puts("\n\t LFU(Least Frequently Used):input 3");
     puts("\n\t Random:input 4");
-    //cin >> t_replace;
-    scanf("%d",&temp);
+    //cin >> t_replace; //for ">>" doesn't overload,so it a error method
+// temp
+    scanf("%hd",&temp);
     switch(temp)
     {
         case 1:t_replace = FIFO;break;
@@ -122,8 +153,9 @@ get_write:
     puts("\nPlease input write policy:");
     puts("\n\t Write through:input 1");
     puts("\n\t Write back:input 2");
-    //cin >> t_write;
-    scanf("%d",&temp);
+    //cin >> t_write; //for ">>" doesn't overload,so it a error method
+// temp
+    scanf("%hd",&temp);
     switch(temp)
     {
         case 1:t_write = write_through;break;
@@ -136,7 +168,6 @@ get_write:
 
 void CalcInfo()
 {
-
     assert(i_cache_line_size != 0);
     i_num_line = (i_cache_size<<10)/i_cache_line_size;
     unsigned long int temp = i_cache_line_size;
@@ -162,17 +193,17 @@ void CreateCache()
 {
     unsigned long int temp = i_num_line;
     cout << "temp = " << temp <<endl;
-    for(unsigned long i=0;i<temp;i++)
+    for(unsigned long i=0;i<100;i++)
     {
-        //cout << cache_item[i] << endl;
+        cout << cache_item[i] << endl;
     }
     for(unsigned long i=0;i<temp;i++)
     {
         cache_item[i][31] = true;
     }
-    for(unsigned long i=0;i<temp;i++)
+    for(unsigned long i=0;i<100;i++)
     {
-        //cout << cache_item[i] << endl;
+        cout << cache_item[i] << endl;
     }
 }
 void FileTest(void)
@@ -304,6 +335,7 @@ bool GetHitNum(char *address)
         cout << "Hit" << endl;
         cout << "Write to Cache" << endl;
         #endif // NDEBUG
+        cache_item[line][29] = true; //设置dirty为true
     }
     else if(is_load)
     {
@@ -332,7 +364,10 @@ bool GetHitNum(char *address)
         cout << "Not Hit" << endl;
         #endif // NDEBUG
 
-        GetWrite(); //写入内存
+        if(cache_item[line][30] == true && cache_item[line][29] == true) //hit位和dirty位必须同时为1才写入
+        {
+            GetWrite(); //写入内存
+        }
 
         #ifndef NDEBUG
         cout << "Read from Main Memory to Cache!" << endl;
@@ -342,6 +377,7 @@ bool GetHitNum(char *address)
         #ifndef NDEBUG
         cout << "Write to Cache" << endl;
         #endif // NDEBUG
+        cache_item[line][29] = true; //设置dirty为true
     }
     else if(is_space)
     {
@@ -408,10 +444,10 @@ void GetReplace(bitset<32> flags)
 }
 void GetWrite() //写入内存
 {
-    if(cache_item[line][30] == true && cache_item[line][29] == true) //hit位和dirty位必须同时为1才写入
-    {
-        cout << "Writing to the Main Memory!" <<endl;
-    }
+    #ifndef NDEBUG
+    cout << "Writing to the Main Memory!" <<endl;
+    #endif
     cache_item[line][29] = false; //设置dirty为false
+    cache_item[line][30] = false; //设置hit为false
 }
 

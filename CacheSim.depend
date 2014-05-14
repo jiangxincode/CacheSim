@@ -1,14 +1,16 @@
 # depslib dependency file v1.0
-1399969385 source:e:\temp\cachesim\main.cpp
+1400071665 source:e:\temp\cachesim\main.cpp
 	"functions.h"
+	"jiangxin.h"
 
-1400056629 e:\temp\cachesim\functions.h
+1400072962 e:\temp\cachesim\functions.h
 	"base.h"
 
-1400055826 source:e:\temp\cachesim\functions.cpp
+1400076979 source:e:\temp\cachesim\functions.cpp
 	"functions.h"
+	"jiangxin.h"
 
-1400056845 e:\temp\cachesim\base.h
+1400077108 e:\temp\cachesim\base.h
 	<iostream>
 	<fstream>
 	<bitset>
@@ -18,6 +20,13 @@
 	<cctype>
 	<cmath>
 
-1400056854 source:e:\temp\cachesim\base.cpp
+1400072994 source:e:\temp\cachesim\base.cpp
 	"base.h"
+
+1400064235 e:\temp\cachesim\jiangxin.h
+
+1400070399 source:e:\temp\cachesim\libjiangxin.cpp
+	"stdio.h"
+	"ctype.h"
+	"jiangxin.h"
 

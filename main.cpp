@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "jiangxin.h"
 
 using namespace std;
 

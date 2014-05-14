@@ -24,4 +24,4 @@ Log:
 	Version 0.01-0.11:
 		完成基本结构，能够实现直接映射，回写方法的Cache模拟。
 	Version 0.12:
-		优化了程序结构，将所有的全局数据变量、结构的定义声明等全部放到了base.cpp/base.h中；将所有的函数的定义和声明放到了functions.cpp/functions.h中
+		优化了程序结构，将所有的全局数据变量、结构的定义声明等全部放到了base.cpp/base.h中；将所有的函数的定义和声明放到了functions.cpp/functions.h中。
