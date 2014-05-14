@@ -2,6 +2,7 @@
 
 #define _windows_
 #define NDEBUG
+//#define OUTPUT
 
 #ifndef headfiles
 #define headfiles
@@ -15,7 +16,7 @@
     #include <cmath>
 #endif
 
-#define MAX_CACHE_LINE 1000000
+#define MAX_CACHE_LINE 100000000
 
 #ifndef types
 #define types

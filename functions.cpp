@@ -238,9 +238,9 @@ void PrintOutput(void)
     cout << "Number of cache load:" << i_num_load << endl;
     cout << "Number of cache store:" << i_num_store << endl;
     cout << endl;
-    cout << "Average cache hit rate:" << f_ave_rate/100 << "%" << endl;
-    cout << "Cache hit rate for loads:" << f_load_rate/100 << "%" << endl;
-    cout << "Cache hit rate for stores:" << f_store_rate/100 << "%" << endl;
+    cout << "Average cache hit rate:" << f_ave_rate*100 << "%" << endl;
+    cout << "Cache hit rate for loads:" << f_load_rate*100 << "%" << endl;
+    cout << "Cache hit rate for stores:" << f_store_rate*100 << "%" << endl;
     cout << endl;
 }
 void PrintBye(void)

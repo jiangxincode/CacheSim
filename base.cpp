@@ -82,6 +82,8 @@ bool GetHitNum(char *address)
         i_num_hit++;
 
         #ifndef NDEBUG
+        cout << "i_num_load_hit: " << i_num_load_hit << endl;
+        cout << "i_num_load: " << i_num_load << endl;
         cout << "Loading" << endl;
         cout << "Hit" << endl;
         cout << "Read from Cache!" << endl;
@@ -96,6 +98,8 @@ bool GetHitNum(char *address)
         i_num_hit++;
 
         #ifndef NDEBUG
+        cout << "i_num_store_hit: " << i_num_store_hit << endl;
+        cout << "i_num_store: " << i_num_store << endl;
         cout << "Storing" << endl;
         cout << "Hit" << endl;
         cout << "Write to Cache" << endl;
@@ -150,7 +154,7 @@ bool GetHitNum(char *address)
     }
     if(i_num_space != 0)
     {
-        cout << "There have " << i_num_space << "space lines" << endl;
+        cout << "There have " << i_num_space << " space lines" << endl;
     }
     return true;
 }
