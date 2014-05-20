@@ -8,9 +8,11 @@
 using namespace std;
 
 /******************************************/
-unsigned int i_cache_size = 0; //cache size
-unsigned int i_cache_line_size = 0; //cacheline size
-unsigned int i_num_line = 0; //How many lines of the cache.
+unsigned int long i_cache_size = 0; //cache size
+unsigned int long i_cache_line_size = 0; //cacheline size
+unsigned int long i_num_line = 0; //How many lines of the cache.
+
+unsigned long int temp = 0; //A temp varibale
 
 ASSOC t_assoc = direct_mapped; //associativity method,default direct_mapped
 REPLACE t_replace = none; //replacement policy,default Random

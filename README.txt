@@ -3,7 +3,7 @@ NAME:
 FUNCTION:
 	Simulate the functions of Cache
 VERAION:
-	0.01
+	0.13
 AUTHOR:
 	jiangxin
 Copyright (c) 2014, jiangxin
@@ -25,3 +25,7 @@ Log:
 		完成基本结构，能够实现直接映射，回写方法的Cache模拟。
 	Version 0.12:
 		优化了程序结构，将所有的全局数据变量、结构的定义声明等全部放到了base.cpp/base.h中；将所有的函数的定义和声明放到了functions.cpp/functions.h中。
+	Version 0.13:
+		大幅度优化了程序，改善了程序结构，修复了大量隐含bug，并将一直可能隐含bug，但还没有时间解决的部分全部做了标记；改善了提示信息，便于调试。
+	Version 0.14:
+		能够正确实现全相联，随机替换策略、回写法。

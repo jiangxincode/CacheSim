@@ -216,3 +216,5 @@ pip-log.txt
 
 ##############################by jiangxin
 *.exe
+*.log
+log

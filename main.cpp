@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
     #ifdef NDEBUG
-    PrintAuthorInfo();
+    jx_PrintAuthorInfo();
     #endif // NDBUG
 
     char ch = '\0';
@@ -27,6 +27,6 @@ do
     ch = tolower(ch);
 }while(ch != 'e');
 
-    PrintBye();
+    jx_PrintBye();
     return 0;
 }

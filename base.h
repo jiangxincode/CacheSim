@@ -9,6 +9,8 @@
 #define NDEBUG
 #define QUICK
 //#define OUTPUT
+//#define DirectMapped_None_WriteBack
+#define FullAssociative_Random_WriteBack
 
 #ifndef HEADFILES
 #define HEADFILES
@@ -20,14 +22,17 @@
     #include <cstdlib>
     #include <cctype>
     #include <cmath>
+    #include <ctime>
 #endif // HEADFILES
 
-// The MaxValue of gcc ARRAY support 268435456(2^28)
+// The max num of gcc array support 268435456(2^28)
 #ifndef QUICK
 #define MAX_CACHE_LINE 268435456
 #endif
-
+// 65536(2^16)
+#ifdef QUICK
 #define MAX_CACHE_LINE 65536
+#endif
 
 
 #ifndef STRUCT_TYPE
@@ -48,9 +53,11 @@ typedef enum replacement_way REPLACE;
 typedef enum write_way WRITE;
 
 /******************************************/
-extern unsigned int i_cache_size; //cache size
-extern unsigned int i_cache_line_size; //cacheline size
-extern unsigned int i_num_line; //How many lines of the cache.
+extern unsigned int long i_cache_size; //cache size
+extern unsigned int long i_cache_line_size; //cacheline size
+extern unsigned int long i_num_line; //How many lines of the cache.
+
+extern unsigned long int temp; //A temp varibale
 
 extern ASSOC t_assoc; //associativity method
 extern REPLACE t_replace; //replacement policy

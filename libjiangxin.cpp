@@ -28,3 +28,26 @@ char jx_getchar(short option)
         return ch;
     }
 }
+void jx_PrintBye(void)
+{
+    puts("\nThanks for your use!");
+}
+void jx_PrintAuthorInfo()
+{
+    puts("Do you want to see the detail infomation about the program(Y/N):");
+    char ch = jx_getchar((short)1);
+    while((ch!='y') && (ch!= 'n'))
+    {
+        puts("Invalid Input,Please Input Again!");
+        ch = jx_getchar((short)1);
+    }
+    if(ch == 'y')
+    {
+        #ifdef _windows_
+            system("notepad.exe README.txt");
+        #endif
+        #ifdef _linux_
+            system("vim README.txt");
+        #endif
+    }
+}
