@@ -54,7 +54,7 @@ void InitVariables(void)
     {
     	cache_item[i].reset(); // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
     }
-    line = 0; // The line num which is processing
+    current_line = 0; // The line num which is processing
     i=0;j=0; //For loop
     /******************************************/
 }
@@ -265,7 +265,7 @@ bool GetHitNum(char *address)
     cout << flags << endl;
     #endif // NDEBUG
 
-    hit = IsHit(flags,line);
+    hit = IsHit(flags,current_line);
     if(hit && is_load)
     {
         i_num_access++;
@@ -292,7 +292,7 @@ bool GetHitNum(char *address)
         cout << "Hit" << endl;
         cout << "Write to Cache" << endl;
         #endif // NDEBUG
-        cache_item[line][29] = true; //设置dirty为true
+        cache_item[current_line][29] = true; //设置dirty为true
     }
     else if(is_load)
     {
@@ -325,7 +325,7 @@ bool GetHitNum(char *address)
         #ifndef NDEBUG
         cout << "Write to Cache" << endl;
         #endif // NDEBUG
-        cache_item[line][29] = true; //设置dirty为true
+        cache_item[current_line][29] = true; //设置dirty为true
     }
     else if(is_space)
     {
@@ -338,13 +338,15 @@ bool GetHitNum(char *address)
     }
     if(i_num_space != 0)
     {
+        #ifndef NDEBUG
         cout << "There have " << i_num_space << " space lines" << endl;
+        #endif // NDEBUG
     }
 
     return true;
 }
 
-bool IsHit(bitset<32> flags,unsigned long int& line)
+bool IsHit(bitset<32> flags,unsigned long int& current_line)
 {
     bool ret = false;
     if(t_assoc == direct_mapped)
@@ -354,16 +356,16 @@ bool IsHit(bitset<32> flags,unsigned long int& line)
         {
             flags_line[j] = flags[i];
         }
-        line = flags_line.to_ulong();
+        current_line = flags_line.to_ulong();
 
-        assert(cache_item[line][31] == true);
+        assert(cache_item[current_line][31] == true);
 
-        if(cache_item[line][30]==true) //判断hit位是否为真
+        if(cache_item[current_line][30]==true) //判断hit位是否为真
         {
             ret = true;
             for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //判断标记是否相同,i:address,j:cache
             {
-                if(flags[i] != cache_item[line][j])
+                if(flags[i] != cache_item[current_line][j])
                 {
                     ret = false;
                     break;
@@ -390,7 +392,7 @@ bool IsHit(bitset<32> flags,unsigned long int& line)
             }
             if(ret == true)
             {
-                line = temp;
+                current_line = temp;
                 break;
             }
         }
@@ -403,20 +405,20 @@ void GetRead(bitset<32> flags)
 {
     if(t_assoc == direct_mapped)
     {
-        if(cache_item[line][30] == false) //hit is false
+        if(cache_item[current_line][30] == false) //hit is false
         {
             #ifndef NDEBUG
             cout << "Read from Main Memory to Cache!" << endl;
             #endif // NDEBUG
             for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //设置标记
             {
-                cache_item[line][j] = flags[i];
+                cache_item[current_line][j] = flags[i];
             }
-            cache_item[line][30] = true; //设置hit位为true
+            cache_item[current_line][30] = true; //设置hit位为true
         }
         else
         {
-            GetReplace(flags,line);
+            GetReplace(flags,current_line);
         }
     }
 	else if(t_assoc == full_associative)
@@ -443,12 +445,12 @@ void GetRead(bitset<32> flags)
         }
         else
         {
-            GetReplace(flags,line);
+            GetReplace(flags,current_line);
         }
     }
 }
 
-void GetReplace(bitset<32> flags,unsigned long int& line)
+void GetReplace(bitset<32> flags,unsigned long int& current_line)
 {
     if(t_assoc == direct_mapped)
     {
@@ -456,10 +458,10 @@ void GetReplace(bitset<32> flags,unsigned long int& line)
 	else if(t_assoc == full_associative)
     {
     	temp = rand()/(RAND_MAX/i_num_line+1);
-        line = temp;
+        current_line = temp;
     }
 
-    if(cache_item[line][29] == true) //dirty位必须为1才写入
+    if(cache_item[current_line][29] == true) //dirty位必须为1才写入
     {
         GetWrite(); //写入内存
     }
@@ -468,9 +470,9 @@ void GetReplace(bitset<32> flags,unsigned long int& line)
 	#endif // NDEBUG
     for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //设置标记
     {
-        cache_item[line][j] = flags[i];
+        cache_item[current_line][j] = flags[i];
     }
-    cache_item[line][30] = true; //设置hit位为true
+    cache_item[current_line][30] = true; //设置hit位为true
 }
 
 void GetWrite() //写入内存
@@ -478,8 +480,8 @@ void GetWrite() //写入内存
     #ifndef NDEBUG
     cout << "Writing to the Main Memory!" <<endl;
     #endif
-    cache_item[line][29] = false; //设置dirty为false
-    cache_item[line][30] = false; //设置hit为false
+    cache_item[current_line][29] = false; //设置dirty为false
+    cache_item[current_line][30] = false; //设置hit为false
 }
 
 void GetHitRate()

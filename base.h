@@ -91,7 +91,7 @@ extern float f_store_rate; //Cache hit rate for stores
 /******************************************/
 
 extern std::bitset<32> cache_item[MAX_CACHE_LINE]; // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
-extern unsigned long int line; // The line num which is processing
+extern unsigned long int current_line; // The line num which is processing
 extern unsigned long int i,j; //For loop
 extern unsigned long int temp; //A temp varibale
 

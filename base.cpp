@@ -39,7 +39,7 @@ float f_store_rate = 0.0; //Cache hit rate for stores
 /******************************************/
 
 bitset<32> cache_item[MAX_CACHE_LINE]; // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
-unsigned long int line = 0; // The line num which is processing
+unsigned long int current_line = 0; // The line num which is processing
 unsigned long int i=0,j=0; //For loop
 unsigned long int temp = 0; //A temp varibale
 
