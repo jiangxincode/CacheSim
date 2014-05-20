@@ -11,7 +11,7 @@ using namespace std;
 
 void InitVariables(void)
 {
-    temp = i_num_line;
+    temp = i_num_line; // 记录上次运行程序所用到的cache行数
     /******************************************/
     i_cache_size = 32; //cache size
     i_cache_line_size = 16; //cacheline size
@@ -64,7 +64,6 @@ void GetInput(void)
 
     puts("\nPlease input the number of the cache size(Unit:KB)");
     puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-
 // temp
     cin >> i_cache_size;
     while(i_cache_size<1 || i_cache_size>= 262144 || (i_cache_size&(~i_cache_size+1))!=i_cache_size)
@@ -76,7 +75,6 @@ void GetInput(void)
 
     puts("\nPlease input the number of the cacheline size(Unit:Byte)");
     puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-
 // temp
     cin >> i_cache_line_size;
     while(i_cache_line_size<1 || i_cache_line_size>= 262144 || (i_cache_line_size&(~i_cache_line_size+1))!=i_cache_line_size)
@@ -85,7 +83,6 @@ void GetInput(void)
         puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
         cin >> i_cache_line_size;
     }
-
 
 get_assoc:
     puts("\nPlease input the method of assoiativity between main memory and cache:");
@@ -149,51 +146,57 @@ get_write:
 
 void CalcInfo()
 {
-    if(t_assoc == full_associative)
+    assert(i_cache_line_size != 0);
+    i_num_line = (i_cache_size<<10)/i_cache_line_size;
+    temp = i_cache_line_size;
+    while(temp)
     {
-        assert(i_cache_line_size != 0);
-        i_num_line = (i_cache_size<<10)/i_cache_line_size;
-        temp = i_cache_line_size;
+        temp >>= 1;
+        bit_block++;
+    }
+    bit_block--; //warning
+    if(t_assoc == direct_mapped)
+    {
+        temp = i_num_line;
         while(temp)
         {
             temp >>= 1;
-            bit_block++;
+            bit_line++;
         }
-        bit_block--; //warning
-
-        bit_tag = 32ul - bit_block;
-        cout << "bit_block:" << bit_block << endl;
-        cout << "bit_line: NULL" << endl;
-        cout << "bit_tag:" << bit_tag << endl;
+        bit_line--; //warning
     }
+    else if(t_assoc == full_associative)
+    {
+        bit_line = 0; // for full_associative,the bit_line is 0
+    }
+
+    bit_tag = 32ul - bit_block - bit_line;
+    cout << "bit_block: " << bit_block << endl;
+    cout << "bit_line: " << bit_line << endl;
+    cout << "bit_tag: " << bit_tag << endl;
 }
 void CreateCache()
 {
+    temp = i_num_line;
 
-	if(t_assoc == full_associative)
+    #ifndef NDEBUG
+    for(i=0;i<100;i++)
     {
-        temp = i_num_line;
-
-        #ifndef NDEGUG
-        cout << "temp = " << temp <<endl;
-        #endif // NDEGUG
-
-        for(i=0;i<100;i++)
-        {
-            cout << cache_item[i] << endl;
-        }
-        for(i=0;i<temp;i++)
-        {
-            cache_item[i][31] = true;
-        }
-        #ifndef NDEBUG
-        for(i=0;i<100;i++)
-        {
-            cout << cache_item[i] << endl;
-        }
-        #endif // NDEBUG
-
+        cout << cache_item[i] << endl;
     }
+    #endif // NDEBUG
+
+    for(i=0;i<temp;i++)
+    {
+        cache_item[i][31] = true;
+    }
+    #ifndef NDEBUG
+
+    for(i=0;i<100;i++)
+    {
+        cout << cache_item[i] << endl;
+    }
+    #endif // NDEBUG
 }
 void FileTest(void)
 {
@@ -211,27 +214,36 @@ void FileTest(void)
         cin >> filepath;
         in_file.open(filepath,ios::in);
     }
-    int tempory = 0;
-    //ofstream out_put;
-    //out_put.open("log",ios::out);
+
+    #ifdef OUTPUT
+    int i_line_proceded = 0;
+    ofstream out_put;
+    out_put.open("test.log",ios::out);
+    #endif // OUTPUT
+
     while(!in_file.eof())
     {
         in_file.getline(address,13);
         bool __attribute__((unused)) is_success = GetHitNum(address); //in case of the warning of "Wunused-but-set-variable"
         assert(is_success);
-        tempory++;
 
-        //out_put << tempory << endl;
-
-        //cout << address << endl;
+        #ifdef OUTPUT
+        i_line_proceded++;
+        out_put << i_line_proceded << endl;
+        cout << address << endl;
+        #endif // OUTPUT
     }
-    //out_put.close();
+
+    #ifdef OUTPUT
+    out_put.close();
+    #endif // OUTPUT
+
+    in_file.close();
     GetHitRate();
 }
 
 bool GetHitNum(char *address)
 {
-
     bool is_store = false;
     bool is_load = false;
     bool is_space = false;
@@ -246,105 +258,120 @@ bool GetHitNum(char *address)
             cout << "The address[0] is:" <<address[0] << endl;
             cout << "ERROR IN JUDGE!" << endl;return false;
     }
-    unsigned long value = strtoul(address+2,NULL,16);
-    bitset<32> flags(value);
+    temp = strtoul(address+2,NULL,16);
+    bitset<32> flags(temp); // flags if the binary of address
 
     #ifndef NDEBUG
     cout << flags << endl;
     #endif // NDEBUG
 
     hit = IsHit(flags,line);
-
-	if(t_assoc == full_associative)
+    if(hit && is_load)
     {
-        if(hit && is_load)
-        {
-            i_num_access++;
-            i_num_load++;
-            i_num_load_hit++;
-            i_num_hit++;
+        i_num_access++;
+        i_num_load++;
+        i_num_load_hit++;
+        i_num_hit++;
 
-            #ifndef NDEBUG
-            cout << "i_num_load_hit: " << i_num_load_hit << endl;
-            cout << "i_num_load: " << i_num_load << endl;
-            cout << "Loading" << endl;
-            cout << "Hit" << endl;
-            cout << "Read from Cache!" << endl;
-            #endif // NDEBUG
+        #ifndef NDEBUG
+        cout << "Loading" << endl;
+        cout << "Hit" << endl;
+        cout << "Read from Cache!" << endl;
+        #endif // NDEBUG
 
-        }
-        else if(hit && is_store)
-        {
-            i_num_access++;
-            i_num_store++;
-            i_num_store_hit++;
-            i_num_hit++;
-
-            #ifndef NDEBUG
-            cout << "i_num_store_hit: " << i_num_store_hit << endl;
-            cout << "i_num_store: " << i_num_store << endl;
-            cout << "Storing" << endl;
-            cout << "Hit" << endl;
-            cout << "Write to Cache" << endl;
-            #endif // NDEBUG
-            cache_item[line][29] = true; //设置dirty为true
-        }
-        else if(is_load)
-        {
-            i_num_access++;
-            i_num_load++;
-
-            #ifndef NDEBUG
-            cout << "Loading" << endl;
-            cout << "Not Hit" << endl;
-            #endif // NDEBUG
-
-            GetRead(flags);
-
-            #ifndef NDEBUG
-            cout << "Read from Cache!" << endl;
-            #endif // NDEBUG
-        }
-        else if(is_store)
-        {
-            i_num_access++;
-            i_num_store++;
-
-            #ifndef NDEBUG
-            cout << "Storing" << endl;
-            cout << "Not Hit" << endl;
-            #endif // NDEBUG
-
-            GetRead(flags);
-
-            #ifndef NDEBUG
-            cout << "Write to Cache" << endl;
-            #endif // NDEBUG
-            cache_item[line][29] = true; //设置dirty为true
-        }
-        else if(is_space)
-        {
-            i_num_space++;
-        }
-        else
-        {
-            cerr << "Something ERROR" << endl;
-            return false;
-        }
-        if(i_num_space != 0)
-        {
-            cout << "There have " << i_num_space << " space lines" << endl;
-        }
     }
+    else if(hit && is_store)
+    {
+        i_num_access++;
+        i_num_store++;
+        i_num_store_hit++;
+        i_num_hit++;
+
+        #ifndef NDEBUG
+        cout << "Storing" << endl;
+        cout << "Hit" << endl;
+        cout << "Write to Cache" << endl;
+        #endif // NDEBUG
+        cache_item[line][29] = true; //设置dirty为true
+    }
+    else if(is_load)
+    {
+        i_num_access++;
+        i_num_load++;
+
+        #ifndef NDEBUG
+        cout << "Loading" << endl;
+        cout << "Not Hit" << endl;
+        #endif // NDEBUG
+
+        GetRead(flags);
+
+        #ifndef NDEBUG
+        cout << "Read from Cache!" << endl;
+        #endif // NDEBUG
+    }
+    else if(is_store)
+    {
+        i_num_access++;
+        i_num_store++;
+
+        #ifndef NDEBUG
+        cout << "Storing" << endl;
+        cout << "Not Hit" << endl;
+        #endif // NDEBUG
+
+        GetRead(flags);
+
+        #ifndef NDEBUG
+        cout << "Write to Cache" << endl;
+        #endif // NDEBUG
+        cache_item[line][29] = true; //设置dirty为true
+    }
+    else if(is_space)
+    {
+        i_num_space++;
+    }
+    else
+    {
+        cerr << "Something ERROR" << endl;
+        return false;
+    }
+    if(i_num_space != 0)
+    {
+        cout << "There have " << i_num_space << " space lines" << endl;
+    }
+
     return true;
 }
 
 bool IsHit(bitset<32> flags,unsigned long int& line)
 {
-    clock_t start,end;
-    start = clock();
     bool ret = false;
-	if(t_assoc == full_associative)
+    if(t_assoc == direct_mapped)
+    {
+        bitset<32> flags_line;
+        for(j=0,i=(bit_block);i<(bit_block+bit_line);j++,i++) //判断在cache多少行
+        {
+            flags_line[j] = flags[i];
+        }
+        line = flags_line.to_ulong();
+
+        assert(cache_item[line][31] == true);
+
+        if(cache_item[line][30]==true) //判断hit位是否为真
+        {
+            ret = true;
+            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //判断标记是否相同,i:address,j:cache
+            {
+                if(flags[i] != cache_item[line][j])
+                {
+                    ret = false;
+                    break;
+                }
+            }
+        }
+    }
+	else if(t_assoc == full_associative)
     {
         for(temp=0;temp<i_num_line;temp++)
         {
@@ -359,7 +386,6 @@ bool IsHit(bitset<32> flags,unsigned long int& line)
                         ret = false;
                         break;
                     }
-
                 }
             }
             if(ret == true)
@@ -370,16 +396,30 @@ bool IsHit(bitset<32> flags,unsigned long int& line)
         }
 
     }
-    end = clock();
-    //cout << "IsHis time is: " << (end - start) << endl;
     return ret;
 }
 
 void GetRead(bitset<32> flags)
 {
-	clock_t start,end;
-	start = clock();
-	if(t_assoc == full_associative)
+    if(t_assoc == direct_mapped)
+    {
+        if(cache_item[line][30] == false) //hit is false
+        {
+            #ifndef NDEBUG
+            cout << "Read from Main Memory to Cache!" << endl;
+            #endif // NDEBUG
+            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //设置标记
+            {
+                cache_item[line][j] = flags[i];
+            }
+            cache_item[line][30] = true; //设置hit位为true
+        }
+        else
+        {
+            GetReplace(flags,line);
+        }
+    }
+	else if(t_assoc == full_associative)
     {
         bool space = false;
         for(temp=0;temp<i_num_line;temp++)
@@ -406,33 +446,31 @@ void GetRead(bitset<32> flags)
             GetReplace(flags,line);
         }
     }
-    end = clock();
-    //cout << "GetRead time is:" << (start-end) << endl;
 }
 
 void GetReplace(bitset<32> flags,unsigned long int& line)
 {
-	clock_t start,end;
-	start = clock();
-	if(t_assoc == full_associative)
+    if(t_assoc == direct_mapped)
+    {
+    }
+	else if(t_assoc == full_associative)
     {
     	temp = rand()/(RAND_MAX/i_num_line+1);
         line = temp;
-    	#ifndef NDEBUG
-    	cout << "Replace the Content of Cache: " << temp << endl;
-    	#endif // NDEBUG
-        if(cache_item[temp][29] == true) //dirty位必须同时为1才写入
-        {
-            GetWrite(); //写入内存
-        }
-        for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //设置标记
-        {
-            cache_item[temp][j] = flags[i];
-        }
-        cache_item[temp][30] = true; //设置hit位为true
     }
-    end = clock();
-    //cout << "GetReplace time is: " << (end-start) << endl;
+
+    if(cache_item[line][29] == true) //dirty位必须为1才写入
+    {
+        GetWrite(); //写入内存
+    }
+	#ifndef NDEBUG
+	cout << "Update the Content of Cache: " << line << endl;
+	#endif // NDEBUG
+    for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //设置标记
+    {
+        cache_item[line][j] = flags[i];
+    }
+    cache_item[line][30] = true; //设置hit位为true
 }
 
 void GetWrite() //写入内存

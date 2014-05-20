@@ -5,33 +5,40 @@
 // 3.description of almost complier options.
 *********************************************/
 
-#define _windows_
-#define NDEBUG
-#define QUICK
-//#define OUTPUT
+#define _windows_ // For Windows OS
+
+#ifndef _windows_
+#define _linux // For Linux OS
+#endif // _windows_
+
+#define NDEBUG // For NDEBUG pattern
+
+#define QUICK // For testing the program quickly
+
+//#define OUTPUT // For writing the information to the test.log
+
 //#define DirectMapped_None_WriteBack
 #define FullAssociative_Random_WriteBack
 
-#ifndef HEADFILES
-#define HEADFILES
-    #include <iostream>
-    #include <fstream>
-    #include <bitset>
-    #include <cassert>
-    #include <cstdio>
-    #include <cstdlib>
-    #include <cctype>
-    #include <cmath>
-    #include <ctime>
-#endif // HEADFILES
+// The headfiles of C++
+#include <iostream>
+#include <fstream>
+#include <bitset>
 
-// The max num of gcc array support 268435456(2^28)
-#ifndef QUICK
-#define MAX_CACHE_LINE 268435456
-#endif
-// 65536(2^16)
+// The headfiles of C
+#include <cstdio>
+#include <cassert>
+#include <cstdlib>
+#include <cctype>
+#include <cmath>
+#include <ctime>
+
+
 #ifdef QUICK
-#define MAX_CACHE_LINE 65536
+#define MAX_CACHE_LINE 65536 // 65536(2^16)
+#endif
+#ifndef QUICK
+#define MAX_CACHE_LINE 268435456 // The max num of gcc array support 268435456(2^28)
 #endif
 
 
@@ -56,8 +63,6 @@ typedef enum write_way WRITE;
 extern unsigned int long i_cache_size; //cache size
 extern unsigned int long i_cache_line_size; //cacheline size
 extern unsigned int long i_num_line; //How many lines of the cache.
-
-extern unsigned long int temp; //A temp varibale
 
 extern ASSOC t_assoc; //associativity method
 extern REPLACE t_replace; //replacement policy
@@ -88,5 +93,6 @@ extern float f_store_rate; //Cache hit rate for stores
 extern std::bitset<32> cache_item[MAX_CACHE_LINE]; // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
 extern unsigned long int line; // The line num which is processing
 extern unsigned long int i,j; //For loop
+extern unsigned long int temp; //A temp varibale
 
 

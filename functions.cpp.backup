@@ -149,46 +149,46 @@ get_write:
 
 void CalcInfo()
 {
-if(t_assoc == direct_mapped)
-{
-    assert(i_cache_line_size != 0);
-    i_num_line = (i_cache_size<<10)/i_cache_line_size;
-    unsigned long int temp = i_cache_line_size;
-    while(temp)
+    if(t_assoc == direct_mapped)
     {
-        temp >>= 1;
-        bit_block++;
+        assert(i_cache_line_size != 0);
+        i_num_line = (i_cache_size<<10)/i_cache_line_size;
+        unsigned long int temp = i_cache_line_size;
+        while(temp)
+        {
+            temp >>= 1;
+            bit_block++;
+        }
+        bit_block--; //warning
+        temp = i_num_line;
+        while(temp)
+        {
+            temp >>= 1;
+            bit_line++;
+        }
+        bit_line--; //warning
+        bit_tag = 32ul - bit_block - bit_line;
+        cout << "bit_block:" << bit_block << endl;
+        cout << "bit_line:" << bit_line << endl;
+        cout << "bit_tag:" << bit_tag << endl;
     }
-    bit_block--; //warning
-    temp = i_num_line;
-    while(temp)
+    else if(t_assoc == full_associative)
     {
-        temp >>= 1;
-        bit_line++;
+        assert(i_cache_line_size != 0);
+        i_num_line = (i_cache_size<<10)/i_cache_line_size;
+        unsigned long int temp = i_cache_line_size;
+        while(temp)
+        {
+            temp >>= 1;
+            bit_block++;
+        }
+        bit_block--; //warning
+    
+        bit_tag = 32ul - bit_block;
+        cout << "bit_block:" << bit_block << endl;
+        cout << "bit_line: NULL" << endl;
+        cout << "bit_tag:" << bit_tag << endl;
     }
-    bit_line--; //warning
-    bit_tag = 32ul - bit_block - bit_line;
-    cout << "bit_block:" << bit_block << endl;
-    cout << "bit_line:" << bit_line << endl;
-    cout << "bit_tag:" << bit_tag << endl;
-}
-else if(t_assoc == full_associative)
-{
-    assert(i_cache_line_size != 0);
-    i_num_line = (i_cache_size<<10)/i_cache_line_size;
-    unsigned long int temp = i_cache_line_size;
-    while(temp)
-    {
-        temp >>= 1;
-        bit_block++;
-    }
-    bit_block--; //warning
-
-    bit_tag = 32ul - bit_block;
-    cout << "bit_block:" << bit_block << endl;
-    cout << "bit_line: NULL" << endl;
-    cout << "bit_tag:" << bit_tag << endl;
-}
 }
 void CreateCache()
 {
