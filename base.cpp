@@ -43,6 +43,7 @@ float f_store_rate = 0.0; //Cache hit rate for stores
 /******************************************/
 
 bitset<32> cache_item[MAX_CACHE_LINE]; // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
+unsigned long int LRU_priority[MAX_CACHE_LINE]; //For LRU policy's priority
 unsigned long int current_line = 0; // The line num which is processing
 unsigned long int current_set = 0; // The set num which is processing
 unsigned long int i=0,j=0; //For loop

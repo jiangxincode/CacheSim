@@ -4,176 +4,8 @@
 *************************************************/
 
 #include "functions.h"
-#include "jiangxin.h"
 
 using namespace std;
-
-
-void InitVariables(void)
-{
-    temp = i_num_line; // 记录上次运行程序所用到的cache行数
-    /******************************************/
-    i_cache_size = 64; //cache size
-    i_cache_line_size = 32; //cacheline size
-
-    #ifdef SetAssociative_Random_WriteBack
-    i_cache_set = 4; //cache set
-    #endif // SetAssociative_Random_WriteBack
-    i_cache_set = 0; //cache set
-
-    i_num_line = 0; //How many lines of the cache.
-    i_num_set = 0; //How many sets of the cache.
-
-    #ifdef DirectMapped_None_WriteBack
-    t_assoc = direct_mapped; //associativity method,default direct_mapped
-    t_replace = none; //replacement policy,default Random
-    t_write = write_back; //write policy,default write_back
-    #endif // DirectMapped_None_WriteBack
-
-    #ifdef FullAssociative_Random_WriteBack
-    t_assoc = full_associative; //associativity method,default full_associative
-    t_replace = Random; //replacement policy,default Random
-    t_write = write_back; //write policy,default write_back
-    #endif // FullAssociative_Random_WriteBack
-    /******************************************/
-
-    #ifdef SetAssociative_Random_WriteBack
-    t_assoc = set_associative; //associativity method,default set_associative
-    t_replace = Random; //replacement policy,default Random
-    t_write = write_back; //write policy,default write_back
-    #endif // SetAssociative_Random_WriteBack
-    /******************************************/
-
-    /******************************************/
-    bit_block = 0; //How many bits of the block.
-    bit_line = 0; //How many bits of the line.
-    bit_tag = 0; //How many bits of the tag.
-    bit_set = 0; //How many bits of the set.
-    /******************************************/
-
-    /******************************************/
-    i_num_access = 0; //Number of cache access
-    i_num_load = 0; //Number of cache load
-    i_num_store = 0; //Number of cache store
-    i_num_space = 0; //Number of space line
-
-    i_num_hit = 0; //Number of cache hit
-    i_num_load_hit = 0; //Number of load hit
-    i_num_store_hit = 0; //Number of store hit
-
-    f_ave_rate = 0.0; //Average cache hit rate
-    f_load_rate = 0.0; //Cache hit rate for loads
-    f_store_rate = 0.0; //Cache hit rate for stores
-    /******************************************/
-    for(i=0;i<temp;i++)
-    {
-    	cache_item[i].reset(); // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
-    }
-    current_line = 0; // The line num which is processing
-    current_set = 0; // The set num which is processing
-    i=0;j=0; //For loop
-    /******************************************/
-}
-void GetInput(void)
-{
-    short temp = 0; //for switch
-
-    puts("\nPlease input the number of the cache size(Unit:KB)");
-    puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-// temp
-    cin >> i_cache_size;
-    while(i_cache_size<1 || i_cache_size>= 262144 || (i_cache_size&(~i_cache_size+1))!=i_cache_size)
-    {
-        puts("\nPlease input the number of the cache size(Unit:KB)");
-        puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-        cin >> i_cache_size;
-    }
-
-    puts("\nPlease input the number of the cacheline size(Unit:Byte)");
-    puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-// temp
-    cin >> i_cache_line_size;
-    while(i_cache_line_size<1 || i_cache_line_size>= 262144 || (i_cache_line_size&(~i_cache_line_size+1))!=i_cache_line_size)
-    {
-        puts("\nPlease input the number of the cache size(Unit:KB)");
-        puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-        cin >> i_cache_line_size;
-    }
-
-get_assoc:
-    puts("\nPlease input the method of assoiativity between main memory and cache:");
-    puts("\n\t directive_mapped:input 1");
-    puts("\n\t set_associative:input 2");
-    puts("\n\t full_associative:input 3");
-    //cin >> t_assoc; //for ">>" doesn't overload,so it a error method
-// temp
-    scanf("%hd",&temp);
-    switch(temp)
-    {
-        case 1:t_assoc = direct_mapped;break;
-        case 2:t_assoc = set_associative;break;
-        case 3:t_assoc = full_associative;break;
-        default:
-            cout << "Input Error!Please input again:" << endl;
-            goto get_assoc;
-    }
-    if(t_assoc == direct_mapped) //If the associativity_way is direct_mapped,the replacement polacy can be none only;
-    {
-        t_replace = none;
-        goto get_write;
-    }
-    else if(t_assoc == full_associative)
-    {
-        goto get_replacement;
-    }
-
-//temp
-    puts("\nInput the how many lines in each set:");
-    puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-    cin >> i_cache_set;
-    while(i_cache_set<1 || i_cache_set>= 262144 || (i_cache_set&(~i_cache_set+1))!=i_cache_set)
-    {
-        puts("\nInput the how many lines in each set:");
-        puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-        cin >> i_cache_set;
-    }
-
-get_replacement:
-    puts("\nPlease input the replacement policy:");
-    puts("\n\t FIFO(First In First Out):input 1");
-    puts("\n\t LRU(Least Recently Used):input 2");
-    puts("\n\t LFU(Least Frequently Used):input 3");
-    puts("\n\t Random:input 4");
-    //cin >> t_replace; //for ">>" doesn't overload,so it a error method
-// temp
-    scanf("%hd",&temp);
-    switch(temp)
-    {
-        case 1:t_replace = FIFO;break;
-        case 2:t_replace = LRU;break;
-        case 3:t_replace = LFU;break;
-        case 4:t_replace = Random;break;
-        default:
-            cout << "Input Error!Please input again:" << endl;
-            goto get_replacement;
-    }
-
-get_write:
-    puts("\nPlease input write policy:");
-    puts("\n\t Write through:input 1");
-    puts("\n\t Write back:input 2");
-    //cin >> t_write; //for ">>" doesn't overload,so it a error method
-// temp
-    scanf("%hd",&temp);
-    switch(temp)
-    {
-        case 1:t_write = write_through;break;
-        case 2:t_write = write_back;break;
-        default:
-            cout << "Input Error!Please input again:" << endl;
-            goto get_write;
-    }
-}
 
 void CalcInfo()
 {
@@ -345,6 +177,10 @@ bool GetHitNum(char *address)
         cout << "Hit" << endl;
         cout << "Read from Cache!" << endl;
         #endif // NDEBUG
+        if(t_replace == LRU)
+        {
+            LruHitProcess();
+        }
 
     }
     else if(hit && is_store)
@@ -360,6 +196,11 @@ bool GetHitNum(char *address)
         cout << "Write to Cache" << endl;
         #endif // NDEBUG
         cache_item[current_line][29] = true; //设置dirty为true
+        if(t_replace == LRU)
+        {
+            LruHitProcess();
+        }
+
     }
     else if(is_load)
     {
@@ -376,6 +217,11 @@ bool GetHitNum(char *address)
         #ifndef NDEBUG
         cout << "Read from Cache!" << endl;
         #endif // NDEBUG
+        if(t_replace == LRU)
+        {
+            LruUnhitSpace();
+        }
+
     }
     else if(is_store)
     {
@@ -393,6 +239,10 @@ bool GetHitNum(char *address)
         cout << "Write to Cache" << endl;
         #endif // NDEBUG
         cache_item[current_line][29] = true; //设置dirty为true
+        if(t_replace == LRU)
+        {
+            LruUnhitSpace();
+        }
     }
     else if(is_space)
     {
@@ -531,8 +381,10 @@ void GetRead(bitset<32> flags)
                 break;
             }
         }
+
         if(space == true)
         {
+            current_line = --temp;
             #ifndef NDEBUG
             cout << "Read from Main Memory to Cache!" << endl;
             #endif // NDEBUG
@@ -541,6 +393,11 @@ void GetRead(bitset<32> flags)
                 cache_item[temp][j] = flags[i];
             }
             cache_item[temp][30] = true; //设置hit位为true.
+            if(t_replace == LRU)
+            {
+                LruUnhitSpace();
+            }
+
         }
         else
         {
@@ -560,6 +417,7 @@ void GetRead(bitset<32> flags)
         }
         if(space == true)
         {
+            current_line = --temp;
             #ifndef NDEBUG
             cout << "Read from Main Memory to Cache!" << endl;
             #endif // NDEBUG
@@ -568,6 +426,10 @@ void GetRead(bitset<32> flags)
                 cache_item[temp][j] = flags[i];
             }
             cache_item[temp][30] = true; //设置hit位为true.
+            if(t_replace == LRU)
+            {
+                LruUnhitSpace();
+            }
         }
         else
         {
@@ -576,33 +438,6 @@ void GetRead(bitset<32> flags)
     }
 }
 
-void GetReplace(bitset<32> flags,unsigned long int& current_line)
-{
-    if(t_assoc == direct_mapped)
-    {
-    }
-	else if(t_assoc == full_associative)
-    {
-    	current_line = rand()/(RAND_MAX/i_num_line+1); // 从所有行中任选一行，进行替换
-    }
-    else if(t_assoc == set_associative) // 从本组中任选一行，进行替换
-    {
-        temp = rand()/(RAND_MAX/i_cache_set);
-        current_line = current_set*i_cache_set+temp;
-    }
-    if(cache_item[current_line][29] == true) //dirty位必须为1才写入
-    {
-        GetWrite(); //写入内存
-    }
-	#ifndef NDEBUG
-	cout << "Update the Content of Cache: " << current_line << endl;
-	#endif // NDEBUG
-    for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //设置标记
-    {
-        cache_item[current_line][j] = flags[i];
-    }
-    cache_item[current_line][30] = true; //设置hit位为true
-}
 
 void GetWrite() //写入内存
 {
@@ -623,43 +458,3 @@ void GetHitRate()
     f_store_rate = ((double)i_num_store_hit)/i_num_store; //Cache hit rate for stores
 }
 
-void PrintOutput(void)
-{
-    cout << endl;
-    cout << "Cache Size:" << i_cache_size << "KB" << endl;
-    cout << "Cacheline Size:" << i_cache_line_size << "B" << endl;
-    switch(t_assoc)
-    {
-        case 1:cout << "Way of Associativity:direct_mapped" << endl;break;
-        case 2:cout << "Way of Associativity:set_associative" << endl;break;
-        case 3:cout << "Way of Associativity:full_associative" << endl;break;
-        default:
-            cerr << "ERROR ASSOCIATIVITY";break;
-    }
-    switch(t_replace)
-    {
-        case 0:cout << "Way of Replacement:NONE" << endl;break;
-        case 1:cout << "Way of Replacement:FIFO" << endl;break;
-        case 2:cout << "Way of Replacement:LRU" << endl;break;
-        case 3:cout << "Way of Replacement:LFU" << endl;break;
-        case 4:cout << "Way of Replacement:Random" << endl;break;
-        default:
-            cerr << "ERROR REPLACEMENT";break;
-    }
-    switch(t_write)
-    {
-        case 1:cout << "Way of Write:write_through" << endl;break;
-        case 2:cout << "Way of Write:write_back" << endl;break;
-        default:
-            cerr << "ERROR WRITE";break;
-    }
-    cout << endl;
-    cout << "Number of cache access:" << i_num_access << endl;
-    cout << "Number of cache load:" << i_num_load << endl;
-    cout << "Number of cache store:" << i_num_store << endl;
-    cout << endl;
-    cout << "Average cache hit rate:" << f_ave_rate*100 << "%" << endl;
-    cout << "Cache hit rate for loads:" << f_load_rate*100 << "%" << endl;
-    cout << "Cache hit rate for stores:" << f_store_rate*100 << "%" << endl;
-    cout << endl;
-}

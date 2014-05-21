@@ -3,14 +3,13 @@
 	"functions.h"
 	"jiangxin.h"
 
-1400628648 e:\temp\cachesim\functions.h
+1400680250 e:\temp\cachesim\functions.h
 	"base.h"
 
-1400636384 source:e:\temp\cachesim\functions.cpp
+1400682473 source:e:\temp\cachesim\functions.cpp
 	"functions.h"
-	"jiangxin.h"
 
-1400636544 e:\temp\cachesim\base.h
+1400684147 e:\temp\cachesim\base.h
 	<iostream>
 	<fstream>
 	<bitset>
@@ -21,7 +20,7 @@
 	<cmath>
 	<ctime>
 
-1400631460 source:e:\temp\cachesim\base.cpp
+1400678714 source:e:\temp\cachesim\base.cpp
 	"base.h"
 
 1400637022 e:\temp\cachesim\jiangxin.h
@@ -39,4 +38,25 @@
 
 1400155427 e:\temp\cachesim\extra.h
 	"base.h"
+
+1400679889 source:e:\temp\cachesim\getreplace.cpp
+	"functions.h"
+
+1400677855 source:e:\temp\cachesim\getinput.cpp
+	"functions.h"
+
+1400678750 source:e:\temp\cachesim\initvariables.cpp
+	"functions.h"
+
+1400678053 source:e:\temp\cachesim\printoutput.cpp
+	"functions.h"
+
+1400683835 source:e:\temp\cachesim\lruhitprocess.cpp
+	"functions.h"
+
+1400683864 source:e:\temp\cachesim\lruunhitspace.cpp
+	"functions.h"
+
+1400683854 source:e:\temp\cachesim\lruunhitunspace.cpp
+	"functions.h"
 

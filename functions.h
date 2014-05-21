@@ -18,3 +18,7 @@ void CreateCache(void);
 void FileTest(void);
 void PrintOutput(void);
 
+void LruHitProcess();
+void LruUnhitSpace();
+void LruUnhitUnspace();
+

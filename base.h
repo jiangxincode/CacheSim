@@ -11,7 +11,7 @@
 #define _linux // For Linux OS
 #endif // _windows_
 
-#define NDEBUG // For NDEBUG pattern
+//#define NDEBUG // For NDEBUG pattern
 
 #define QUICK // For testing the program quickly
 
@@ -96,6 +96,7 @@ extern float f_store_rate; //Cache hit rate for stores
 /******************************************/
 
 extern std::bitset<32> cache_item[MAX_CACHE_LINE]; // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
+extern unsigned long int LRU_priority[MAX_CACHE_LINE]; //For LRU policy's priority
 extern unsigned long int current_line; // The line num which is processing
 extern unsigned long int current_set; // The set num which is processing
 extern unsigned long int i,j; //For loop
