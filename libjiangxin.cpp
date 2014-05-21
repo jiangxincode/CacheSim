@@ -2,6 +2,7 @@
 
 #include "stdio.h"
 #include "ctype.h"
+#include "stdlib.h"
 #include "jiangxin.h"
 
 char jx_getchar(short option)

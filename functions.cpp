@@ -595,7 +595,7 @@ void GetReplace(bitset<32> flags,unsigned long int& current_line)
         GetWrite(); //写入内存
     }
 	#ifndef NDEBUG
-	cout << "Update the Content of Cache: " << line << endl;
+	cout << "Update the Content of Cache: " << current_line << endl;
 	#endif // NDEBUG
     for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //设置标记
     {

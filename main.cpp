@@ -13,11 +13,7 @@ int main()
 do
 {
     InitVariables();
-
-    #ifdef NDEBUG
     GetInput(); // get input information
-    #endif // NDEBUG
-
     CalcInfo();
     CreateCache();
     FileTest();
