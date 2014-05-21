@@ -6,11 +6,11 @@
 1400628648 e:\temp\cachesim\functions.h
 	"base.h"
 
-1400628805 source:e:\temp\cachesim\functions.cpp
+1400631705 source:e:\temp\cachesim\functions.cpp
 	"functions.h"
 	"jiangxin.h"
 
-1400628440 e:\temp\cachesim\base.h
+1400634322 e:\temp\cachesim\base.h
 	<iostream>
 	<fstream>
 	<bitset>
@@ -21,7 +21,7 @@
 	<cmath>
 	<ctime>
 
-1400628478 source:e:\temp\cachesim\base.cpp
+1400631460 source:e:\temp\cachesim\base.cpp
 	"base.h"
 
 1400155834 e:\temp\cachesim\jiangxin.h

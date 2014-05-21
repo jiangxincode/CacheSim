@@ -13,9 +13,16 @@ void InitVariables(void)
 {
     temp = i_num_line; // 记录上次运行程序所用到的cache行数
     /******************************************/
-    i_cache_size = 32; //cache size
-    i_cache_line_size = 16; //cacheline size
+    i_cache_size = 64; //cache size
+    i_cache_line_size = 32; //cacheline size
+
+    #ifdef SetAssociative_Random_WriteBack
+    i_cache_set = 4; //cache set
+    #endif // SetAssociative_Random_WriteBack
+    i_cache_set = 0; //cache set
+
     i_num_line = 0; //How many lines of the cache.
+    i_num_set = 0; //How many sets of the cache.
 
     #ifdef DirectMapped_None_WriteBack
     t_assoc = direct_mapped; //associativity method,default direct_mapped
@@ -24,16 +31,24 @@ void InitVariables(void)
     #endif // DirectMapped_None_WriteBack
 
     #ifdef FullAssociative_Random_WriteBack
-    t_assoc = full_associative; //associativity method,default direct_mapped
+    t_assoc = full_associative; //associativity method,default full_associative
     t_replace = Random; //replacement policy,default Random
     t_write = write_back; //write policy,default write_back
     #endif // FullAssociative_Random_WriteBack
+    /******************************************/
+
+    #ifdef SetAssociative_Random_WriteBack
+    t_assoc = set_associative; //associativity method,default set_associative
+    t_replace = Random; //replacement policy,default Random
+    t_write = write_back; //write policy,default write_back
+    #endif // SetAssociative_Random_WriteBack
     /******************************************/
 
     /******************************************/
     bit_block = 0; //How many bits of the block.
     bit_line = 0; //How many bits of the line.
     bit_tag = 0; //How many bits of the tag.
+    bit_set = 0; //How many bits of the set.
     /******************************************/
 
     /******************************************/
@@ -55,6 +70,7 @@ void InitVariables(void)
     	cache_item[i].reset(); // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
     }
     current_line = 0; // The line num which is processing
+    current_set = 0; // The set num which is processing
     i=0;j=0; //For loop
     /******************************************/
 }
@@ -106,6 +122,21 @@ get_assoc:
         t_replace = none;
         goto get_write;
     }
+    else if(t_assoc == full_associative)
+    {
+        goto get_replacement;
+    }
+
+//temp
+    puts("\nInput the how many lines in each set:");
+    puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
+    cin >> i_cache_set;
+    while(i_cache_set<1 || i_cache_set>= 262144 || (i_cache_set&(~i_cache_set+1))!=i_cache_set)
+    {
+        puts("\nInput the how many lines in each set:");
+        puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
+        cin >> i_cache_set;
+    }
 
 get_replacement:
     puts("\nPlease input the replacement policy:");
@@ -148,6 +179,7 @@ void CalcInfo()
 {
     assert(i_cache_line_size != 0);
     i_num_line = (i_cache_size<<10)/i_cache_line_size;
+
     temp = i_cache_line_size;
     while(temp)
     {
@@ -157,6 +189,7 @@ void CalcInfo()
     bit_block--; //warning
     if(t_assoc == direct_mapped)
     {
+        bit_set = 0; // for direct_mapped,the bit_set is 0
         temp = i_num_line;
         while(temp)
         {
@@ -168,12 +201,46 @@ void CalcInfo()
     else if(t_assoc == full_associative)
     {
         bit_line = 0; // for full_associative,the bit_line is 0
+        bit_set = 0; // for full_associative,the bit_set is 0
+    }
+    else if(t_assoc == set_associative)
+    {
+        bit_line = 0; // for set_associative,the bit_line is 0
+        assert(i_cache_set != 0);
+        assert(i_num_line > i_cache_set);
+        i_num_set = i_num_line/i_cache_set;
+        temp = i_num_set;
+        while(temp)
+        {
+            temp >>= 1;
+            bit_set++;
+        }
+        bit_set--;
     }
 
-    bit_tag = 32ul - bit_block - bit_line;
-    cout << "bit_block: " << bit_block << endl;
-    cout << "bit_line: " << bit_line << endl;
-    cout << "bit_tag: " << bit_tag << endl;
+    bit_tag = 32ul - bit_block - bit_line - bit_set;
+    assert(bit_tag <= 29); //32-valid-hit-dirty
+    cout << "i_cache_line_size: " << i_cache_line_size << "B" << endl; // 显示块大小
+    cout << "i_cache_size: " << i_cache_size << "KB" << endl; // 显示cache数据区总容量
+    if(t_assoc == set_associative) // 如果为组相联，显示是几路组相联
+    {
+        cout << "i_cache_set: " << i_cache_set << " lines each set" << endl;
+    }
+    cout << "i_num_line: " << i_num_line << endl; // 显示共有多少行
+    if(t_assoc == set_associative) // 如果为组相联，显示共有几组
+    {
+        cout << "i_num_set: " << i_num_set << endl;
+    }
+    cout << "bit_block: " << bit_block << endl; // 显示块内地址所需位数
+    if(t_assoc == direct_mapped) // 如果为直接映射，显示行号所需位数
+    {
+        cout << "bit_line: " << bit_line << endl;
+    }
+    if(t_assoc == set_associative) // 如果为组相联，显示组号所需位数
+    {
+        cout << "bit_set: " << bit_set << endl;
+    }
+    cout << "bit_tag: " << bit_tag << endl; // 显示标志位所需位数
 }
 void CreateCache()
 {
@@ -398,6 +465,38 @@ bool IsHit(bitset<32> flags,unsigned long int& current_line)
         }
 
     }
+    else if(t_assoc == set_associative)
+    {
+        bitset<32> flags_set;
+        for(j=0,i=(bit_block);i<(bit_block+bit_set);j++,i++) //判断在cache多少组
+        {
+            flags_set[j] = flags[i];
+        }
+        current_set = flags_set.to_ulong();
+        for(temp=(current_set*i_cache_set);temp<((current_set+1)*i_cache_set);temp++)
+        {
+            if(cache_item[temp][30]==true) //判断hit位是否为真
+            {
+                ret = true;
+                for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //判断标记是否相同,i:address,j:cache
+                {
+
+                    if(flags[i] != cache_item[temp][j])
+                    {
+                        ret = false;
+                        break;
+                    }
+                }
+            }
+            if(ret == true)
+            {
+                current_line = temp;
+                break;
+            }
+        }
+
+        //assert(cache_item[current_line][31] == true);
+    }
     return ret;
 }
 
@@ -448,6 +547,33 @@ void GetRead(bitset<32> flags)
             GetReplace(flags,current_line);
         }
     }
+    else if(t_assoc == set_associative)
+    {
+        bool space = false;
+        for(temp=(current_set*i_cache_set);temp<((current_set+1)*i_cache_set);temp++)
+        {
+            if(cache_item[temp][30] == false) //find a space line
+            {
+                space = true;
+                break;
+            }
+        }
+        if(space == true)
+        {
+            #ifndef NDEBUG
+            cout << "Read from Main Memory to Cache!" << endl;
+            #endif // NDEBUG
+            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //设置标记
+            {
+                cache_item[temp][j] = flags[i];
+            }
+            cache_item[temp][30] = true; //设置hit位为true.
+        }
+        else
+        {
+            GetReplace(flags,current_line);
+        }
+    }
 }
 
 void GetReplace(bitset<32> flags,unsigned long int& current_line)
@@ -457,10 +583,13 @@ void GetReplace(bitset<32> flags,unsigned long int& current_line)
     }
 	else if(t_assoc == full_associative)
     {
-    	temp = rand()/(RAND_MAX/i_num_line+1);
-        current_line = temp;
+    	current_line = rand()/(RAND_MAX/i_num_line+1); // 从所有行中任选一行，进行替换
     }
-
+    else if(t_assoc == set_associative) // 从本组中任选一行，进行替换
+    {
+        temp = rand()/(RAND_MAX/i_cache_set);
+        current_line = current_set*i_cache_set+temp;
+    }
     if(cache_item[current_line][29] == true) //dirty位必须为1才写入
     {
         GetWrite(); //写入内存
@@ -497,8 +626,8 @@ void GetHitRate()
 void PrintOutput(void)
 {
     cout << endl;
-    cout << "Cache Size:" << i_cache_size << endl;
-    cout << "Cacheline Size:" << i_cache_line_size << endl;
+    cout << "Cache Size:" << i_cache_size << "KB" << endl;
+    cout << "Cacheline Size:" << i_cache_line_size << "B" << endl;
     switch(t_assoc)
     {
         case 1:cout << "Way of Associativity:direct_mapped" << endl;break;

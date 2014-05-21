@@ -18,7 +18,8 @@
 //#define OUTPUT // For writing the information to the test.log
 
 //#define DirectMapped_None_WriteBack
-#define FullAssociative_Random_WriteBack
+//#define FullAssociative_Random_WriteBack
+#define SetAssociative_Random_WriteBack
 
 // The headfiles of C++
 #include <iostream>
@@ -62,7 +63,10 @@ typedef enum write_way WRITE;
 /******************************************/
 extern unsigned int long i_cache_size; //cache size
 extern unsigned int long i_cache_line_size; //cacheline size
+extern unsigned int long i_cache_set; //cache set
+
 extern unsigned int long i_num_line; //How many lines of the cache.
+extern unsigned int long i_num_set; //How many sets of the cache.
 
 extern ASSOC t_assoc; //associativity method
 extern REPLACE t_replace; //replacement policy
@@ -73,6 +77,7 @@ extern WRITE t_write; //write policy
 extern short unsigned int bit_block; //How many bits of the block.
 extern short unsigned int bit_line; //How many bits of the line.
 extern short unsigned int bit_tag; //How many bits of the tag.
+extern short unsigned int bit_set; //How many bits of the set.
 /******************************************/
 
 /******************************************/
@@ -92,6 +97,7 @@ extern float f_store_rate; //Cache hit rate for stores
 
 extern std::bitset<32> cache_item[MAX_CACHE_LINE]; // [31]:valid,[30]:hit,[29]:dirty,[28]-[0]:data
 extern unsigned long int current_line; // The line num which is processing
+extern unsigned long int current_set; // The set num which is processing
 extern unsigned long int i,j; //For loop
 extern unsigned long int temp; //A temp varibale
 
