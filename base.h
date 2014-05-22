@@ -11,7 +11,7 @@
 #define _linux // For Linux OS
 #endif // _windows_
 
-//#define NDEBUG // For NDEBUG pattern
+#define NDEBUG // For NDEBUG pattern
 
 #define QUICK // For testing the program quickly
 

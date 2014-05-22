@@ -6,8 +6,8 @@
 
 bool GetHitNum(char *address);
 void GetHitRate(void);
-bool IsHit(std::bitset<32> flags,unsigned long int& current_line);
-void GetReplace(std::bitset<32> flags,unsigned long int& current_line);
+bool IsHit(std::bitset<32> flags);
+void GetReplace(std::bitset<32> flags);
 void GetRead(std::bitset<32> flags);
 void GetWrite();
 

@@ -32,6 +32,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="CalcInfo.cpp" />
+		<Unit filename="CreateCache.cpp" />
+		<Unit filename="FileTest.cpp" />
+		<Unit filename="GetInput.cpp" />
+		<Unit filename="InitVariables.cpp" />
+		<Unit filename="LRU.cpp" />
+		<Unit filename="PrintOutput.cpp" />
 		<Unit filename="base.cpp" />
 		<Unit filename="base.h" />
 		<Unit filename="functions.cpp" />
