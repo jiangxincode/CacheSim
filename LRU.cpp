@@ -1,4 +1,4 @@
-#include "functions.h"
+ï»¿#include "functions.h"
 
 using namespace std;
 
@@ -10,7 +10,7 @@ void LruHitProcess() // if the replacement policy is LRU,and hit
         {
             if(LRU_priority[i]<LRU_priority[current_line] && cache_item[current_line][30]==true)
             {
-                LRU_priority[i]++; // Èç¹û¸ÃÐÐ±ÈÕýÔÚ·ÃÎÊµÄÐÐ¼ÆÊýÆ÷ÖµÐ¡£¬²¢ÇÒ¸ÃÐÐÖÐhitÎªtrue
+                LRU_priority[i]++; // å¦‚æžœè¯¥è¡Œæ¯”æ­£åœ¨è®¿é—®çš„è¡Œè®¡æ•°å™¨å€¼å°ï¼Œå¹¶ä¸”è¯¥è¡Œä¸­hitä¸ºtrue
             }
         }
         LRU_priority[current_line] = 0;
@@ -21,7 +21,7 @@ void LruHitProcess() // if the replacement policy is LRU,and hit
         {
             if(LRU_priority[i]<LRU_priority[current_line] && cache_item[current_line][30]==true)
             {
-                LRU_priority[i]++; // Èç¹û¸ÃÐÐ±ÈÕýÔÚ·ÃÎÊµÄÐÐ¼ÆÊýÆ÷ÖµÐ¡£¬²¢ÇÒ¸ÃÐÐÖÐhitÎªtrue
+                LRU_priority[i]++; // å¦‚æžœè¯¥è¡Œæ¯”æ­£åœ¨è®¿é—®çš„è¡Œè®¡æ•°å™¨å€¼å°ï¼Œå¹¶ä¸”è¯¥è¡Œä¸­hitä¸ºtrue
             }
         }
         LRU_priority[current_line] = 0;
@@ -36,7 +36,7 @@ void LruUnhitSpace() // if the replacement policy is LRU,and not hit,but there h
         {
             if(cache_item[current_line][30]==true)
             {
-                LRU_priority[i]++; // Èç¹û¸ÃÐÐ¸ÃÐÐÖÐhitÎªtrue
+                LRU_priority[i]++; // å¦‚æžœè¯¥è¡Œè¯¥è¡Œä¸­hitä¸ºtrue
             }
         }
         LRU_priority[current_line] = 0;
@@ -47,7 +47,7 @@ void LruUnhitSpace() // if the replacement policy is LRU,and not hit,but there h
         {
             if(cache_item[current_line][30]==true)
             {
-                LRU_priority[i]++; // Èç¹û¸ÃÐÐ¸ÃÐÐÖÐhitÎªtrue
+                LRU_priority[i]++; // å¦‚æžœè¯¥è¡Œè¯¥è¡Œä¸­hitä¸ºtrue
             }
         }
         LRU_priority[current_line] = 0;

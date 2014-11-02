@@ -1,4 +1,4 @@
-#define _windows_ // For Windows OS
+﻿#define _windows_ // For Windows OS
 
 #ifndef _windows_
 #define _linux // For Linux OS

@@ -1,4 +1,4 @@
-/*************************************************
+ï»¿/*************************************************
 // functions.cpp
 // 1.Defination of almost all functions.
 *************************************************/
@@ -32,7 +32,7 @@ bool GetHitNum(char *address)
 
     hit = IsHit(flags);
 
-    if(hit && is_load) // ÃüÖĞ£¬¶Á²Ù×÷
+    if(hit && is_load) // å‘½ä¸­ï¼Œè¯»æ“ä½œ
     {
         i_num_access++;
         i_num_load++;
@@ -50,7 +50,7 @@ bool GetHitNum(char *address)
         }
 
     }
-    else if(hit && is_store) // ÃüÖĞ£¬Ğ´²Ù×÷
+    else if(hit && is_store) // å‘½ä¸­ï¼Œå†™æ“ä½œ
     {
         i_num_access++;
         i_num_store++;
@@ -63,14 +63,14 @@ bool GetHitNum(char *address)
         cout << "Write to Cache" << endl;
         #endif // NDEBUG
 
-        cache_item[current_line][29] = true; //ÉèÖÃdirtyÎªtrue
+        cache_item[current_line][29] = true; //è®¾ç½®dirtyä¸ºtrue
         if(t_replace == LRU)
         {
             LruHitProcess();
         }
 
     }
-    else if((!hit) && is_load) // Ã»ÃüÖĞ£¬¶Á²Ù×÷
+    else if((!hit) && is_load) // æ²¡å‘½ä¸­ï¼Œè¯»æ“ä½œ
     {
         i_num_access++;
         i_num_load++;
@@ -92,7 +92,7 @@ bool GetHitNum(char *address)
         }
 
     }
-    else if((!hit) && is_store) // Ã»ÃüÖĞ£¬Ğ´²Ù×÷
+    else if((!hit) && is_store) // æ²¡å‘½ä¸­ï¼Œå†™æ“ä½œ
     {
         i_num_access++;
         i_num_store++;
@@ -108,7 +108,7 @@ bool GetHitNum(char *address)
         cout << "Write to Cache" << endl;
         #endif // NDEBUG
 
-        cache_item[current_line][29] = true; //ÉèÖÃdirtyÎªtrue
+        cache_item[current_line][29] = true; //è®¾ç½®dirtyä¸ºtrue
         if(t_replace == LRU)
         {
             LruUnhitSpace();
@@ -139,7 +139,7 @@ bool IsHit(bitset<32> flags)
     if(t_assoc == direct_mapped)
     {
         bitset<32> flags_line; // a temp variable
-        for(j=0,i=(bit_block);i<(bit_block+bit_line);j++,i++) //ÅĞ¶ÏÔÚcache¶àÉÙĞĞ
+        for(j=0,i=(bit_block);i<(bit_block+bit_line);j++,i++) //åˆ¤æ–­åœ¨cacheå¤šå°‘è¡Œ
         {
             flags_line[j] = flags[i];
         }
@@ -147,10 +147,10 @@ bool IsHit(bitset<32> flags)
 
         assert(cache_item[current_line][31] == true);
 
-        if(cache_item[current_line][30]==true) //ÅĞ¶ÏhitÎ»ÊÇ·ñÎªÕæ
+        if(cache_item[current_line][30]==true) //åˆ¤æ–­hitä½æ˜¯å¦ä¸ºçœŸ
         {
             ret = true;
-            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //ÅĞ¶Ï±ê¼ÇÊÇ·ñÏàÍ¬,i:address,j:cache
+            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //åˆ¤æ–­æ ‡è®°æ˜¯å¦ç›¸åŒ,i:address,j:cache
             {
                 if(flags[i] != cache_item[current_line][j])
                 {
@@ -164,10 +164,10 @@ bool IsHit(bitset<32> flags)
     {
         for(temp=0;temp<i_num_line;temp++)
         {
-            if(cache_item[temp][30]==true) //ÅĞ¶ÏhitÎ»ÊÇ·ñÎªÕæ
+            if(cache_item[temp][30]==true) //åˆ¤æ–­hitä½æ˜¯å¦ä¸ºçœŸ
             {
                 ret = true;
-                for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //ÅĞ¶Ï±ê¼ÇÊÇ·ñÏàÍ¬,i:address,j:cache
+                for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //åˆ¤æ–­æ ‡è®°æ˜¯å¦ç›¸åŒ,i:address,j:cache
                 {
 
                     if(flags[i] != cache_item[temp][j])
@@ -188,17 +188,17 @@ bool IsHit(bitset<32> flags)
     else if(t_assoc == set_associative)
     {
         bitset<32> flags_set;
-        for(j=0,i=(bit_block);i<(bit_block+bit_set);j++,i++) //ÅĞ¶ÏÔÚcache¶àÉÙ×é
+        for(j=0,i=(bit_block);i<(bit_block+bit_set);j++,i++) //åˆ¤æ–­åœ¨cacheå¤šå°‘ç»„
         {
             flags_set[j] = flags[i];
         }
         current_set = flags_set.to_ulong();
         for(temp=(current_set*i_cache_set);temp<((current_set+1)*i_cache_set);temp++)
         {
-            if(cache_item[temp][30]==true) //ÅĞ¶ÏhitÎ»ÊÇ·ñÎªÕæ
+            if(cache_item[temp][30]==true) //åˆ¤æ–­hitä½æ˜¯å¦ä¸ºçœŸ
             {
                 ret = true;
-                for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //ÅĞ¶Ï±ê¼ÇÊÇ·ñÏàÍ¬,i:address,j:cache
+                for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //åˆ¤æ–­æ ‡è®°æ˜¯å¦ç›¸åŒ,i:address,j:cache
                 {
 
                     if(flags[i] != cache_item[temp][j])
@@ -227,12 +227,12 @@ void GetRead(bitset<32> flags)
             #ifndef NDEBUG
             cout << "Read from Main Memory to Cache!" << endl;
             #endif // NDEBUG
-            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //ÉèÖÃ±ê¼Ç
+            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //è®¾ç½®æ ‡è®°
             {
                 cache_item[current_line][j] = flags[i];
                 assert(j>0);
             }
-            cache_item[current_line][30] = true; //ÉèÖÃhitÎ»Îªtrue
+            cache_item[current_line][30] = true; //è®¾ç½®hitä½ä¸ºtrue
         }
         else
         {
@@ -253,17 +253,17 @@ void GetRead(bitset<32> flags)
 
         if(space == true)
         {
-            current_line = temp; // ´Ë´¦£¬temp²»Ğè¼õ1£¬ÒòÎªÒ»µ©·¢ÏÖ¿ÕĞĞ£¬ÉÏÃæforÑ­»·»ábreak£¬´ËÊ±tempÉĞÎ´++
+            current_line = temp; // æ­¤å¤„ï¼Œtempä¸éœ€å‡1ï¼Œå› ä¸ºä¸€æ—¦å‘ç°ç©ºè¡Œï¼Œä¸Šé¢forå¾ªç¯ä¼šbreakï¼Œæ­¤æ—¶tempå°šæœª++
             #ifndef NDEBUG
             cout << "Read from Main Memory to Cache!" << endl;
             #endif // NDEBUG
 
-            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //ÉèÖÃ±ê¼Ç
+            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //è®¾ç½®æ ‡è®°
             {
                 cache_item[current_line][j] = flags[i];
                 assert(j>0);
             }
-            cache_item[current_line][30] = true; //ÉèÖÃhitÎ»Îªtrue.
+            cache_item[current_line][30] = true; //è®¾ç½®hitä½ä¸ºtrue.
             if(t_replace == LRU)
             {
                 LruUnhitSpace();
@@ -288,17 +288,17 @@ void GetRead(bitset<32> flags)
         }
         if(space == true)
         {
-            current_line = temp; // ´Ë´¦£¬temp²»Ğè¼õ1£¬ÒòÎªÒ»µ©·¢ÏÖ¿ÕĞĞ£¬ÉÏÃæforÑ­»·»ábreak£¬´ËÊ±tempÉĞÎ´++
+            current_line = temp; // æ­¤å¤„ï¼Œtempä¸éœ€å‡1ï¼Œå› ä¸ºä¸€æ—¦å‘ç°ç©ºè¡Œï¼Œä¸Šé¢forå¾ªç¯ä¼šbreakï¼Œæ­¤æ—¶tempå°šæœª++
             #ifndef NDEBUG
             cout << "Read from Main Memory to Cache!" << endl;
             #endif // NDEBUG
 
-            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //ÉèÖÃ±ê¼Ç
+            for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //è®¾ç½®æ ‡è®°
             {
                 cache_item[current_line][j] = flags[i];
                 assert(j>0);
             }
-            cache_item[current_line][30] = true; //ÉèÖÃhitÎ»Îªtrue.
+            cache_item[current_line][30] = true; //è®¾ç½®hitä½ä¸ºtrue.
             if(t_replace == LRU)
             {
                 LruUnhitSpace();
@@ -327,7 +327,7 @@ void GetReplace(bitset<32> flags)
             LruUnhitUnspace();
         }
     }
-    else if(t_assoc == set_associative) // ´Ó±¾×éÖĞÈÎÑ¡Ò»ĞĞ£¬½øĞĞÌæ»»
+    else if(t_assoc == set_associative) // ä»æœ¬ç»„ä¸­ä»»é€‰ä¸€è¡Œï¼Œè¿›è¡Œæ›¿æ¢
     {
         if(t_replace == Random)
         {
@@ -339,30 +339,30 @@ void GetReplace(bitset<32> flags)
             LruUnhitUnspace();
         }
     }
-    if(cache_item[current_line][29] == true) //dirtyÎ»±ØĞëÎª1²ÅĞ´Èë
+    if(cache_item[current_line][29] == true) //dirtyä½å¿…é¡»ä¸º1æ‰å†™å…¥
     {
-        GetWrite(); //Ğ´ÈëÄÚ´æ
+        GetWrite(); //å†™å…¥å†…å­˜
     }
 
 	#ifndef NDEBUG
 	cout << "Read from Main Memory to Cache: " << endl;
 	#endif // NDEBUG
 
-    for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //ÉèÖÃ±ê¼Ç
+    for(i=31,j=28;i>(31ul-bit_tag);i--,j--) //è®¾ç½®æ ‡è®°
     {
         cache_item[current_line][j] = flags[i];
         assert(j>0);
     }
-    cache_item[current_line][30] = true; //ÉèÖÃhitÎ»Îªtrue
+    cache_item[current_line][30] = true; //è®¾ç½®hitä½ä¸ºtrue
 }
 
-void GetWrite() //Ğ´ÈëÄÚ´æ
+void GetWrite() //å†™å…¥å†…å­˜
 {
     #ifndef NDEBUG
     cout << "Writing to the Main Memory!" <<endl;
     #endif
-    cache_item[current_line][29] = false; //ÉèÖÃdirtyÎªfalse
-    cache_item[current_line][30] = false; //ÉèÖÃhitÎªfalse
+    cache_item[current_line][29] = false; //è®¾ç½®dirtyä¸ºfalse
+    cache_item[current_line][30] = false; //è®¾ç½®hitä¸ºfalse
 }
 
 void GetHitRate()

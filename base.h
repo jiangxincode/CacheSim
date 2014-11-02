@@ -1,4 +1,4 @@
-/*********************************************
+ï»¿/*********************************************
 // base.h
 // 1.declaration of almost all globle variables.
 // 2.definition of almost all structures.
@@ -45,13 +45,13 @@
 
 #ifndef STRUCT_TYPE
 #define STRUCT_TYPE
-    // ÄÚ´æµØÖ·ÓëCacheµØÖ·µÄ¹ØÁª·½Ê½£ºÖ±½ÓÓ³Éä¡¢×éÏàÁª¡¢È«ÏàÁª
+    // å†…å­˜åœ°å€ä¸Cacheåœ°å€çš„å…³è”æ–¹å¼ï¼šç›´æ¥æ˜ å°„ã€ç»„ç›¸è”ã€å…¨ç›¸è”
     enum associativity_way{direct_mapped=1,set_associative,full_associative};
 
-    // Ìæ»»²ßÂÔ£ºnone£¨Ö±½ÓÌæ»»£©£¬FIFO£¨ÏÈ½øÏÈ³öËã·¨£©£¬LRU£¨×î½ü×îÉÙÓÃËã·¨£©£¬LFU£¨×î²»¾­³£ÓÃËã·¨£©£¬Random£¨Ëæ»úÌæ»»Ëã·¨£©
+    // æ›¿æ¢ç­–ç•¥ï¼šnoneï¼ˆç›´æ¥æ›¿æ¢ï¼‰ï¼ŒFIFOï¼ˆå…ˆè¿›å…ˆå‡ºç®—æ³•ï¼‰ï¼ŒLRUï¼ˆæœ€è¿‘æœ€å°‘ç”¨ç®—æ³•ï¼‰ï¼ŒLFUï¼ˆæœ€ä¸ç»å¸¸ç”¨ç®—æ³•ï¼‰ï¼ŒRandomï¼ˆéšæœºæ›¿æ¢ç®—æ³•ï¼‰
     enum replacement_way{none,FIFO=1,LRU,LFU,Random};
 
-    // Ğ´²ßÂÔ£ºwrite_through£¨È«Ğ´·¨£©£¬write_back£¨»ØĞ´·¨£©
+    // å†™ç­–ç•¥ï¼šwrite_throughï¼ˆå…¨å†™æ³•ï¼‰ï¼Œwrite_backï¼ˆå›å†™æ³•ï¼‰
     enum write_way{write_through=1,write_back};
 #endif // STRUCT_TYPE
 

@@ -1,4 +1,4 @@
-// libjiangxin.cpp
+ï»¿// libjiangxin.cpp
 
 #include "stdio.h"
 #include "ctype.h"
@@ -9,14 +9,14 @@ char jx_getchar(short option)
 {
     char ch,temp;
     ch = getchar();
-    if(ch == '\n') //Ö±½ÓÊäÈë»Ø³µ£¬·µ»Ø'\n'
+    if(ch == '\n') //ç›´æ¥è¾“å…¥å›è½¦ï¼Œè¿”å›'\n'
         return '\n';
-    else if((temp=getchar())!='\n') //ÊäÈëÒ»Ğ©×Ö·û£¨²»Ö¹Ò»¸ö£©£¬È»ºó»Ø³µ£¬Çå³ıËùÓĞ×Ö·ûºó·µ»Ø'\n'
+    else if((temp=getchar())!='\n') //è¾“å…¥ä¸€äº›å­—ç¬¦ï¼ˆä¸æ­¢ä¸€ä¸ªï¼‰ï¼Œç„¶åå›è½¦ï¼Œæ¸…é™¤æ‰€æœ‰å­—ç¬¦åè¿”å›'\n'
     {
         while((temp=getchar())!='\n' && temp!=EOF);
         return '\n';
     }
-    else //ÊäÈëÒ»¸ö×Ö·û£¬Èíºó»Ø³µ£¬ÎŞĞëÇå³ı£¬´óĞ¡Ğ´×ª»»ºóÖ±½Ó·µ»Ø
+    else //è¾“å…¥ä¸€ä¸ªå­—ç¬¦ï¼Œè½¯åå›è½¦ï¼Œæ— é¡»æ¸…é™¤ï¼Œå¤§å°å†™è½¬æ¢åç›´æ¥è¿”å›
     {
         switch(option)
         {

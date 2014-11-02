@@ -45,3 +45,7 @@ http://github.com/jiangxincode
 ### Version 0.20
 
 * 消除了Version 0.19中的严重bug，消除了部分冗余代码。
+
+### Version 0.21
+
+* 编码全部设置为UTF-8

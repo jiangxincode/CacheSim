@@ -1,4 +1,4 @@
-#include "functions.h"
+ï»¿#include "functions.h"
 
 using namespace std;
 
@@ -48,25 +48,25 @@ void CalcInfo()
 
     bit_tag = 32ul - bit_block - bit_line - bit_set;
     assert(bit_tag <= 29); //32-valid-hit-dirty
-    cout << "i_cache_line_size: " << i_cache_line_size << "B" << endl; // ÏÔÊ¾¿é´óÐ¡
-    cout << "i_cache_size: " << i_cache_size << "KB" << endl; // ÏÔÊ¾cacheÊý¾ÝÇø×ÜÈÝÁ¿
-    if(t_assoc == set_associative) // Èç¹ûÎª×éÏàÁª£¬ÏÔÊ¾ÊÇ¼¸Â·×éÏàÁª
+    cout << "i_cache_line_size: " << i_cache_line_size << "B" << endl; // æ˜¾ç¤ºå—å¤§å°
+    cout << "i_cache_size: " << i_cache_size << "KB" << endl; // æ˜¾ç¤ºcacheæ•°æ®åŒºæ€»å®¹é‡
+    if(t_assoc == set_associative) // å¦‚æžœä¸ºç»„ç›¸è”ï¼Œæ˜¾ç¤ºæ˜¯å‡ è·¯ç»„ç›¸è”
     {
         cout << "i_cache_set: " << i_cache_set << " lines each set" << endl;
     }
-    cout << "i_num_line: " << i_num_line << endl; // ÏÔÊ¾¹²ÓÐ¶àÉÙÐÐ
-    if(t_assoc == set_associative) // Èç¹ûÎª×éÏàÁª£¬ÏÔÊ¾¹²ÓÐ¼¸×é
+    cout << "i_num_line: " << i_num_line << endl; // æ˜¾ç¤ºå…±æœ‰å¤šå°‘è¡Œ
+    if(t_assoc == set_associative) // å¦‚æžœä¸ºç»„ç›¸è”ï¼Œæ˜¾ç¤ºå…±æœ‰å‡ ç»„
     {
         cout << "i_num_set: " << i_num_set << endl;
     }
-    cout << "bit_block: " << bit_block << endl; // ÏÔÊ¾¿éÄÚµØÖ·ËùÐèÎ»Êý
-    if(t_assoc == direct_mapped) // Èç¹ûÎªÖ±½ÓÓ³Éä£¬ÏÔÊ¾ÐÐºÅËùÐèÎ»Êý
+    cout << "bit_block: " << bit_block << endl; // æ˜¾ç¤ºå—å†…åœ°å€æ‰€éœ€ä½æ•°
+    if(t_assoc == direct_mapped) // å¦‚æžœä¸ºç›´æŽ¥æ˜ å°„ï¼Œæ˜¾ç¤ºè¡Œå·æ‰€éœ€ä½æ•°
     {
         cout << "bit_line: " << bit_line << endl;
     }
-    if(t_assoc == set_associative) // Èç¹ûÎª×éÏàÁª£¬ÏÔÊ¾×éºÅËùÐèÎ»Êý
+    if(t_assoc == set_associative) // å¦‚æžœä¸ºç»„ç›¸è”ï¼Œæ˜¾ç¤ºç»„å·æ‰€éœ€ä½æ•°
     {
         cout << "bit_set: " << bit_set << endl;
     }
-    cout << "bit_tag: " << bit_tag << endl; // ÏÔÊ¾±êÖ¾Î»ËùÐèÎ»Êý
+    cout << "bit_tag: " << bit_tag << endl; // æ˜¾ç¤ºæ ‡å¿—ä½æ‰€éœ€ä½æ•°
 }
