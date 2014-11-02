@@ -72,3 +72,39 @@
 1400742278 source:e:\temp\cachesim\lru.cpp
 	"functions.h"
 
+1414905974 source:e:\temp\cpp\cachesim\base.cpp
+	"base.h"
+
+1414933972 e:\temp\cpp\cachesim\base.h
+	<iostream>
+	<fstream>
+	<bitset>
+	<cstdio>
+	<cassert>
+	<cstdlib>
+	<cctype>
+	<cmath>
+	<ctime>
+
+1414933972 source:e:\temp\cpp\cachesim\calcinfo.cpp
+
+1414933972 source:e:\temp\cpp\cachesim\createcache.cpp
+
+1414933972 source:e:\temp\cpp\cachesim\filetest.cpp
+
+1414933972 source:e:\temp\cpp\cachesim\functions.cpp
+	"functions.h"
+
+1414905974 e:\temp\cpp\cachesim\functions.h
+	"base.h"
+
+1414933935 source:e:\temp\cpp\cachesim\getinput.cpp
+
+1414933972 source:e:\temp\cpp\cachesim\initvariables.cpp
+
+1414933972 source:e:\temp\cpp\cachesim\lru.cpp
+
+1414933972 source:e:\temp\cpp\cachesim\printoutput.cpp
+
+1414934068 source:e:\temp\cpp\cachesim\main.cpp
+

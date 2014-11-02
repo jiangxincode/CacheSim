@@ -5,11 +5,11 @@ using namespace std;
 void GetInput(void)
 {
     short temp = 0; //for switch
-
     puts("\nPlease input the number of the cache size(Unit:KB)");
     puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
 // temp
     cin >> i_cache_size;
+
     while(i_cache_size<1 || i_cache_size>= 262144 || (i_cache_size&(~i_cache_size+1))!=i_cache_size)
     {
         puts("\nPlease input the number of the cache size(Unit:KB)");
@@ -21,6 +21,7 @@ void GetInput(void)
     puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
 // temp
     cin >> i_cache_line_size;
+
     while(i_cache_line_size<1 || i_cache_line_size>= 262144 || (i_cache_line_size&(~i_cache_line_size+1))!=i_cache_line_size)
     {
         puts("\nPlease input the number of the cache size(Unit:KB)");
@@ -36,15 +37,26 @@ get_assoc:
     //cin >> t_assoc; //for ">>" doesn't overload,so it a error method
 // temp
     scanf("%hd",&temp);
+
     switch(temp)
     {
-        case 1:t_assoc = direct_mapped;break;
-        case 2:t_assoc = set_associative;break;
-        case 3:t_assoc = full_associative;break;
-        default:
-            cout << "Input Error!Please input again:" << endl;
-            goto get_assoc;
+    case 1:
+        t_assoc = direct_mapped;
+        break;
+
+    case 2:
+        t_assoc = set_associative;
+        break;
+
+    case 3:
+        t_assoc = full_associative;
+        break;
+
+    default:
+        cout << "Input Error!Please input again:" << endl;
+        goto get_assoc;
     }
+
     if(t_assoc == direct_mapped) //If the associativity_way is direct_mapped,the replacement polacy can be none only;
     {
         t_replace = none;
@@ -59,6 +71,7 @@ get_assoc:
     puts("\nInput the how many lines in each set:");
     puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
     cin >> i_cache_set;
+
     while(i_cache_set<1 || i_cache_set>= 262144 || (i_cache_set&(~i_cache_set+1))!=i_cache_set)
     {
         puts("\nInput the how many lines in each set:");
@@ -75,15 +88,28 @@ get_replacement:
     //cin >> t_replace; //for ">>" doesn't overload,so it a error method
 // temp
     scanf("%hd",&temp);
+
     switch(temp)
     {
-        case 1:t_replace = FIFO;break;
-        case 2:t_replace = LRU;break;
-        case 3:t_replace = LFU;break;
-        case 4:t_replace = Random;break;
-        default:
-            cout << "Input Error!Please input again:" << endl;
-            goto get_replacement;
+    case 1:
+        t_replace = FIFO;
+        break;
+
+    case 2:
+        t_replace = LRU;
+        break;
+
+    case 3:
+        t_replace = LFU;
+        break;
+
+    case 4:
+        t_replace = Random;
+        break;
+
+    default:
+        cout << "Input Error!Please input again:" << endl;
+        goto get_replacement;
     }
 
 get_write:
@@ -93,12 +119,19 @@ get_write:
     //cin >> t_write; //for ">>" doesn't overload,so it a error method
 // temp
     scanf("%hd",&temp);
+
     switch(temp)
     {
-        case 1:t_write = write_through;break;
-        case 2:t_write = write_back;break;
-        default:
-            cout << "Input Error!Please input again:" << endl;
-            goto get_write;
+    case 1:
+        t_write = write_through;
+        break;
+
+    case 2:
+        t_write = write_back;
+        break;
+
+    default:
+        cout << "Input Error!Please input again:" << endl;
+        goto get_write;
     }
 }

@@ -49,3 +49,9 @@ http://github.com/jiangxincode
 ### Version 0.21
 
 * 编码全部设置为UTF-8
+
+### Version 0.22
+
+* 删除了不必要信息，比如作者信息，退出信息
+* 重新format代码
+* 删除不必要的using namespace std;

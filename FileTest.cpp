@@ -12,6 +12,7 @@ void FileTest(void)
     cout << "\n\t myfile.trace" << endl;
     cin >> filepath;
     in_file.open(filepath,ios::in);
+
     while(in_file.fail())
     {
         cout << "Open ERROR! Please Check the Path and Name, and Input again!" << endl;
@@ -19,29 +20,27 @@ void FileTest(void)
         in_file.open(filepath,ios::in);
     }
 
-    #ifdef OUTPUT
+#ifdef OUTPUT
     int i_line_proceded = 0;
     ofstream out_put;
     out_put.open("test.log",ios::out);
-    #endif // OUTPUT
+#endif // OUTPUT
 
     while(!in_file.eof())
     {
         in_file.getline(address,13);
         bool __attribute__((unused)) is_success = GetHitNum(address); //in case of the warning of "Wunused-but-set-variable"
         assert(is_success);
-
-        #ifdef OUTPUT
+#ifdef OUTPUT
         i_line_proceded++;
         out_put << i_line_proceded << endl;
         cout << address << endl;
-        #endif // OUTPUT
+#endif // OUTPUT
     }
 
-    #ifdef OUTPUT
+#ifdef OUTPUT
     out_put.close();
-    #endif // OUTPUT
-
+#endif // OUTPUT
     in_file.close();
     GetHitRate();
 }

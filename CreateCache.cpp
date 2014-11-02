@@ -5,23 +5,26 @@ using namespace std;
 void CreateCache()
 {
     temp = i_num_line;
+#ifndef NDEBUG
 
-    #ifndef NDEBUG
-    for(i=0;i<100;i++)
+    for(i=0; i<100; i++)
     {
         cout << cache_item[i] << endl;
     }
-    #endif // NDEBUG
 
-    for(i=0;i<temp;i++)
+#endif // NDEBUG
+
+    for(i=0; i<temp; i++)
     {
         cache_item[i][31] = true;
     }
-    #ifndef NDEBUG
 
-    for(i=0;i<100;i++)
+#ifndef NDEBUG
+
+    for(i=0; i<100; i++)
     {
         cout << cache_item[i] << endl;
     }
-    #endif // NDEBUG
+
+#endif // NDEBUG
 }

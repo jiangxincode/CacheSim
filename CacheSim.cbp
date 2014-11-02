@@ -43,8 +43,6 @@
 		<Unit filename="base.h" />
 		<Unit filename="functions.cpp" />
 		<Unit filename="functions.h" />
-		<Unit filename="jiangxin.h" />
-		<Unit filename="libjiangxin.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
