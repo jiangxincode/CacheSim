@@ -1,8 +1,9 @@
-﻿#include "functions.h"
+﻿#include "base.h"
 
 int main()
 {
     char ch = '\0';
+
     do
     {
         InitVariables();
@@ -13,8 +14,8 @@ int main()
         PrintOutput(); // output the result
         std::cout << "Continue/Exit(C/E)" << std::endl;
         std::cin >> ch;
-        ch = tolower(ch);
     }
-    while(ch != 'e');
+    while((ch!='e') && (ch!='E'));
+
     return 0;
 }

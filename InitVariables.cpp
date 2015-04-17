@@ -1,6 +1,4 @@
-﻿#include "functions.h"
-
-using namespace std;
+﻿#include "base.h"
 
 void InitVariables(void)
 {
@@ -14,7 +12,6 @@ void InitVariables(void)
         }
     }
 
-    /******************************************/
     i_cache_size = 64; //cache size
     i_cache_line_size = 32; //cacheline size
 #ifdef SetAssociative_Random_WriteBack
@@ -33,20 +30,15 @@ void InitVariables(void)
     t_replace = Random; //replacement policy,default Random
     t_write = write_back; //write policy,default write_back
 #endif // FullAssociative_Random_WriteBack
-    /******************************************/
 #ifdef SetAssociative_Random_WriteBack
     t_assoc = set_associative; //associativity method,default set_associative
     t_replace = Random; //replacement policy,default Random
     t_write = write_back; //write policy,default write_back
 #endif // SetAssociative_Random_WriteBack
-    /******************************************/
-    /******************************************/
     bit_block = 0; //How many bits of the block.
     bit_line = 0; //How many bits of the line.
     bit_tag = 0; //How many bits of the tag.
     bit_set = 0; //How many bits of the set.
-    /******************************************/
-    /******************************************/
     i_num_access = 0; //Number of cache access
     i_num_load = 0; //Number of cache load
     i_num_store = 0; //Number of cache store
@@ -57,10 +49,8 @@ void InitVariables(void)
     f_ave_rate = 0.0; //Average cache hit rate
     f_load_rate = 0.0; //Cache hit rate for loads
     f_store_rate = 0.0; //Cache hit rate for stores
-    /******************************************/
     current_line = 0; // The line num which is processing
     current_set = 0; // The set num which is processing
     i=0;
     j=0; //For loop
-    /******************************************/
 }

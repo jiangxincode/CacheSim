@@ -55,3 +55,7 @@ http://github.com/jiangxincode
 * 删除了不必要信息，比如作者信息，退出信息
 * 重新format代码
 * 删除不必要的using namespace std;
+
+### Version 0.22
+
+* merge部分文件

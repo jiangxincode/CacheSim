@@ -1,4 +1,4 @@
-﻿#include "functions.h"
+﻿#include "base.h"
 
 using namespace std;
 
@@ -7,7 +7,6 @@ void GetInput(void)
     short temp = 0; //for switch
     puts("\nPlease input the number of the cache size(Unit:KB)");
     puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-// temp
     cin >> i_cache_size;
 
     while(i_cache_size<1 || i_cache_size>= 262144 || (i_cache_size&(~i_cache_size+1))!=i_cache_size)
@@ -19,7 +18,6 @@ void GetInput(void)
 
     puts("\nPlease input the number of the cacheline size(Unit:Byte)");
     puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-// temp
     cin >> i_cache_line_size;
 
     while(i_cache_line_size<1 || i_cache_line_size>= 262144 || (i_cache_line_size&(~i_cache_line_size+1))!=i_cache_line_size)
@@ -34,9 +32,7 @@ get_assoc:
     puts("\n\t directive_mapped:input 1");
     puts("\n\t set_associative:input 2");
     puts("\n\t full_associative:input 3");
-    //cin >> t_assoc; //for ">>" doesn't overload,so it a error method
-// temp
-    scanf("%hd",&temp);
+    cin >> temp;
 
     switch(temp)
     {
@@ -66,17 +62,18 @@ get_assoc:
     {
         goto get_replacement;
     }
-
-//temp
-    puts("\nInput the how many lines in each set:");
-    puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
-    cin >> i_cache_set;
-
-    while(i_cache_set<1 || i_cache_set>= 262144 || (i_cache_set&(~i_cache_set+1))!=i_cache_set)
+    else
     {
         puts("\nInput the how many lines in each set:");
         puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
         cin >> i_cache_set;
+
+        while(i_cache_set<1 || i_cache_set>= 262144 || (i_cache_set&(~i_cache_set+1))!=i_cache_set)
+        {
+            puts("\nInput the how many lines in each set:");
+            puts("\n\t(for example:1,2,4,8,16,32,64...2^18)");
+            cin >> i_cache_set;
+        }
     }
 
 get_replacement:
@@ -85,9 +82,7 @@ get_replacement:
     puts("\n\t LRU(Least Recently Used):input 2");
     puts("\n\t LFU(Least Frequently Used):input 3");
     puts("\n\t Random:input 4");
-    //cin >> t_replace; //for ">>" doesn't overload,so it a error method
-// temp
-    scanf("%hd",&temp);
+    cin >> temp;
 
     switch(temp)
     {
@@ -116,9 +111,7 @@ get_write:
     puts("\nPlease input write policy:");
     puts("\n\t Write through:input 1");
     puts("\n\t Write back:input 2");
-    //cin >> t_write; //for ">>" doesn't overload,so it a error method
-// temp
-    scanf("%hd",&temp);
+    cin >> temp;
 
     switch(temp)
     {

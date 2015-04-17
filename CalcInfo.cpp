@@ -1,4 +1,4 @@
-﻿#include "functions.h"
+﻿#include "base.h"
 
 using namespace std;
 
@@ -7,7 +7,7 @@ void CalcInfo()
 {
     assert(i_cache_line_size != 0);
     i_num_line = (i_cache_size<<10)/i_cache_line_size;
-    temp = i_cache_line_size;
+    temp = i_cache_line_size; //计算块内地址位数
 
     while(temp)
     {

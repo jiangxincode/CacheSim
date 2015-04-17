@@ -3,13 +3,8 @@
 // 1.declaration of almost all globle variables.
 // 2.definition of almost all structures.
 // 3.description of almost complier options.
+// 4.declaration of almost all functions.
 *********************************************/
-
-#define _windows_ // For Windows OS
-
-#ifndef _windows_
-#define _linux // For Linux OS
-#endif // _windows_
 
 #define NDEBUG // For NDEBUG pattern
 
@@ -21,12 +16,10 @@
 //#define FullAssociative_Random_WriteBack
 #define SetAssociative_Random_WriteBack
 
-// The headfiles of C++
 #include <iostream>
 #include <fstream>
 #include <bitset>
 
-// The headfiles of C
 #include <cstdio>
 #include <cassert>
 #include <cstdlib>
@@ -103,3 +96,20 @@ extern unsigned long int i,j; //For loop
 extern unsigned long int temp; //A temp varibale
 
 
+bool GetHitNum(char *address);
+void GetHitRate(void);
+bool IsHit(std::bitset<32> flags);
+void GetReplace(std::bitset<32> flags);
+void GetRead(std::bitset<32> flags);
+void GetWrite();
+
+void InitVariables(void);
+void GetInput(void);
+void CalcInfo(void);
+void CreateCache(void);
+void FileTest(void);
+void PrintOutput(void);
+
+void LruHitProcess();
+void LruUnhitSpace();
+void LruUnhitUnspace();
