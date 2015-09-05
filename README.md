@@ -4,6 +4,8 @@ jiangxinnju@163.com
 
 http://github.com/jiangxincode
 
+You can see another cache simulator in: http://pages.cs.wisc.edu/~markhill/DineroIV/
+
 ## 版本改动
 
 ### Version 0.01-0.11:
