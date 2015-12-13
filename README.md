@@ -61,3 +61,7 @@ You can see another cache simulator in: http://pages.cs.wisc.edu/~markhill/Diner
 ### Version 0.22
 
 * merge部分文件
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jiangxincode/cachesim/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
