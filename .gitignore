@@ -8,3 +8,5 @@ doxygen/
 .cproject
 .project
 .settings/
+*.o
+*.exe

@@ -8,7 +8,9 @@
 
 程序使用的C++，程序中使用了一些C++11标准中的类，比如bitset<T>，所以必须在支持C++11的编译器上进行编译，但现在主流的编译器比如gcc和VS均已支持。
 
-程序能够在Windows/Linux平台下编译运行。IDE使用的是Code::Blocks: <http://www.codeblocks.org/>。如果你想通过其它方式编译，请做适当修改（入口函数是`main.cpp`）。编码方式是UTF-8。
+程序能够在Windows/Linux平台下编译运行。已经提供了Makefile文件，保证不同编译环境的编译一致性。
+如果你想通过其它方式编译，请根据实际情况做适当修改（入口函数是`main.cpp`）。
+编码方式是UTF-8。
 
 如果你只是想查看最后的数据结果，不关心每条数据的具体命中情况请保留base.h中的`#define NDEBUG // For NDEBUG pattern`，否则，程序需要很长的运行时间。
 
