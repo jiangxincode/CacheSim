@@ -3,3 +3,8 @@ bin/
 obj/
 doxygen/
 *.swp
+/Debug/
+/Release/
+.cproject
+.project
+.settings/
