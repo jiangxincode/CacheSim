@@ -16,6 +16,12 @@
 
 如果你觉得该程序不满足你的要求，你可以看下另一个程序：<http://pages.cs.wisc.edu/~markhill/DineroIV/>
 
+关于如何生成trace文件，下面的文章可能会给你一些思路：
+
+* cse240a Project 1: Cache Simulator: <http://cseweb.ucsd.edu/classes/fa07/cse240a/project1.html>
+* Intel Pin基础: <https://www.cnblogs.com/long123king/p/3635408.html>
+* pin下载: <http://software.intel.com/en-us/articles/pintool-downloads>
+
 ## License
 
 + The MIT License (MIT) <http://mit-license.org/>
