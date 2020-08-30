@@ -1,12 +1,26 @@
 ##############################by jiangxin
+
+doxygen/
+
+# Vim
+*.swp
+
+# Codeblocks
 bin/
 obj/
-doxygen/
-*.swp
-/Debug/
-/Release/
+
+# Visual Studio
+Debug/
+Release/
+
+# Eclipse
 .cproject
 .project
 .settings/
+
+# IDEA
+.idea/
+
+# Makefile
 *.o
 *.exe
