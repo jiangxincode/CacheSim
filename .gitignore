@@ -24,3 +24,6 @@ Release/
 # Makefile
 *.o
 *.exe
+
+# CMake
+cmake-build-debug/

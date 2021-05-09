@@ -29,7 +29,12 @@ void FileTest(void)
     while(!in_file.eof())
     {
         in_file.getline(address,13);
+#ifdef __GNUC__
         bool __attribute__((unused)) is_success = GetHitNum(address); //in case of the warning of "Wunused-but-set-variable"
+#endif
+#ifndef __GNUC__
+        bool is_success = GetHitNum(address);
+#endif
         assert(is_success);
 #ifdef OUTPUT
         i_line_proceded++;
