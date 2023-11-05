@@ -17,13 +17,13 @@ endif()
 include_directories(.)
 
 add_executable(CacheSim
-        base.cpp
-        base.h
-        CalcInfo.cpp
-        CreateCache.cpp
-        FileTest.cpp
-        GetInput.cpp
-        InitVariables.cpp
-        LRU.cpp
-        main.cpp
-        PrintOutput.cpp)
+        src/base.cpp
+        src/base.h
+        src/CalcInfo.cpp
+        src/CreateCache.cpp
+        src/FileTest.cpp
+        src/GetInput.cpp
+        src/InitVariables.cpp
+        src/LRU.cpp
+        src/main.cpp
+        src/PrintOutput.cpp)
