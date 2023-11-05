@@ -7,7 +7,7 @@ OBJS = main.o base.o CalcInfo.o CreateCache.o FileTest.o GetInput.o InitVariable
 all: $(TARGET)
 
 clean:
-	$(RM)  *.exe *.o
+	$(RM)  *.exe *.o ${TARGET}
 
 main: ${OBJS}
 	$(CC) -o main ${OBJS} -Wall
