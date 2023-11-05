@@ -27,3 +27,4 @@ Release/
 
 # CMake
 cmake-build-debug/
+build/
