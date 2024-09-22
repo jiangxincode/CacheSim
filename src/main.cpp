@@ -1,17 +1,17 @@
 ﻿#include "base.h"
 
-int main()
+int main(int argc, char* argv[])
 {
 	char ch = '\0';
 
 	do
 	{
 		InitVariables();
-		GetInput(); // get input information
+		GetInput();
 		CalcInfo();
 		CreateCache();
 		FileTest();
-		PrintOutput(); // output the result
+		PrintOutput();
 		std::cout << "Continue/Exit(C/E)" << std::endl;
 		std::cin >> ch;
 	} while ((ch != 'e') && (ch != 'E'));

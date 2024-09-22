@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void FileTest(void)
+void FileTest()
 {
     char filepath[100];
     ifstream in_file;

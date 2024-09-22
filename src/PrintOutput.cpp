@@ -2,11 +2,11 @@
 
 using namespace std;
 
-void PrintOutput(void)
+void PrintOutput()
 {
     cout << endl;
     cout << "Cache Size:" << i_cache_size << "KB" << endl;
-    cout << "Cacheline Size:" << i_cache_line_size << "B" << endl;
+    cout << "Cache Line Size:" << i_cache_line_size << "B" << endl;
 
     switch(t_assoc)
     {

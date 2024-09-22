@@ -10,7 +10,7 @@
 
 /******************************************/
 unsigned int long i_cache_size = 0; //cache size
-unsigned int long i_cache_line_size = 0; //cacheline size
+unsigned int long i_cache_line_size = 0; //cache line size
 unsigned int long i_cache_set = 0; //cache set
 
 unsigned int long i_num_line = 0; //How many lines of the cache.
@@ -48,12 +48,12 @@ unsigned long int LRU_priority[MAX_CACHE_LINE]; //For LRU policy's priority
 unsigned long int current_line = 0; // The line num which is processing
 unsigned long int current_set = 0; // The set num which is processing
 unsigned long int i=0,j=0; //For loop
-unsigned long int temp = 0; //A temp varibale
+unsigned long int temp = 0; //A temp variable
 
 
 /*************************************************
 // functions.cpp
-// 1.Defination of almost all functions.
+// 1.Definition of almost all functions.
 *************************************************/
 
 using namespace std;
@@ -201,7 +201,7 @@ bool IsHit(bitset<32> flags)
         current_line = flags_line.to_ulong();
         assert(cache_item[current_line][31] == true);
 
-        if(cache_item[current_line][30]==true) //判断hit位是否为真
+        if(cache_item[current_line][30]) //判断hit位是否为真
         {
             ret = true;
 
@@ -219,7 +219,7 @@ bool IsHit(bitset<32> flags)
     {
         for(temp=0; temp<i_num_line; temp++)
         {
-            if(cache_item[temp][30]==true) //判断hit位是否为真
+            if(cache_item[temp][30]) //判断hit位是否为真
             {
                 ret = true;
 
@@ -233,7 +233,7 @@ bool IsHit(bitset<32> flags)
                 }
             }
 
-            if(ret == true)
+            if(ret)
             {
                 current_line = temp;
                 break;
@@ -253,7 +253,7 @@ bool IsHit(bitset<32> flags)
 
         for(temp=(current_set*i_cache_set); temp<((current_set+1)*i_cache_set); temp++)
         {
-            if(cache_item[temp][30]==true) //判断hit位是否为真
+            if(cache_item[temp][30]) //判断hit位是否为真
             {
                 ret = true;
 
@@ -267,7 +267,7 @@ bool IsHit(bitset<32> flags)
                 }
             }
 
-            if(ret == true)
+            if(ret)
             {
                 current_line = temp;
                 break;
@@ -282,7 +282,7 @@ void GetRead(bitset<32> flags)
 {
     if(t_assoc == direct_mapped)
     {
-        if(cache_item[current_line][30] == false) //hit is false
+        if(!cache_item[current_line][30]) //hit is false
         {
 #ifndef NDEBUG
             cout << "Read from Main Memory to Cache!" << endl;
@@ -307,14 +307,14 @@ void GetRead(bitset<32> flags)
 
         for(temp=0; temp<i_num_line; temp++)
         {
-            if(cache_item[temp][30] == false) //find a space line
+            if(!cache_item[temp][30]) //find a space line
             {
                 space = true;
                 break;
             }
         }
 
-        if(space == true)
+        if(space)
         {
             current_line = temp; // 此处，temp不需减1，因为一旦发现空行，上面for循环会break，此时temp尚未++
 #ifndef NDEBUG
@@ -345,14 +345,14 @@ void GetRead(bitset<32> flags)
 
         for(temp=(current_set*i_cache_set); temp<((current_set+1)*i_cache_set); temp++)
         {
-            if(cache_item[temp][30] == false) //find a space line
+            if(!cache_item[temp][30]) //find a space line
             {
                 space = true;
                 break;
             }
         }
 
-        if(space == true)
+        if(space)
         {
             current_line = temp; // 此处，temp不需减1，因为一旦发现空行，上面for循环会break，此时temp尚未++
 #ifndef NDEBUG
@@ -408,7 +408,7 @@ void GetReplace(bitset<32> flags)
         }
     }
 
-    if(cache_item[current_line][29] == true) //dirty位必须为1才写入
+    if(cache_item[current_line][29]) //dirty位必须为1才写入
     {
         GetWrite(); //写入内存
     }

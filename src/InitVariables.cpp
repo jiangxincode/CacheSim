@@ -1,6 +1,6 @@
 ﻿#include "base.h"
 
-void InitVariables(void)
+void InitVariables()
 {
     for(i=0; i<i_num_line; i++)
     {
@@ -13,7 +13,7 @@ void InitVariables(void)
     }
 
     i_cache_size = 64; //cache size
-    i_cache_line_size = 32; //cacheline size
+    i_cache_line_size = 32; //cache line size
 #ifdef SetAssociative_Random_WriteBack
     i_cache_set = 4; //cache set
 #endif // SetAssociative_Random_WriteBack

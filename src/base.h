@@ -1,8 +1,8 @@
 ﻿/*********************************************
 // base.h
-// 1.declaration of almost all globle variables.
+// 1.declaration of almost all global variables.
 // 2.definition of almost all structures.
-// 3.description of almost complier options.
+// 3.description of almost all compiler options.
 // 4.declaration of almost all functions.
 *********************************************/
 
@@ -29,7 +29,7 @@
 
 
 #ifdef QUICK
-#define MAX_CACHE_LINE 65536 // 65536(2^16)
+#define MAX_CACHE_LINE 65536 // 2^16
 #endif
 #ifndef QUICK
 #define MAX_CACHE_LINE 268435456 // The max num of gcc array support 268435456(2^28)
@@ -55,7 +55,7 @@ typedef enum write_way WRITE;
 
 /******************************************/
 extern unsigned int long i_cache_size; //cache size
-extern unsigned int long i_cache_line_size; //cacheline size
+extern unsigned int long i_cache_line_size; //cache line size
 extern unsigned int long i_cache_set; //cache set
 
 extern unsigned int long i_num_line; //How many lines of the cache.
@@ -93,22 +93,30 @@ extern unsigned long int LRU_priority[MAX_CACHE_LINE]; //For LRU policy's priori
 extern unsigned long int current_line; // The line num which is processing
 extern unsigned long int current_set; // The set num which is processing
 extern unsigned long int i,j; //For loop
-extern unsigned long int temp; //A temp varibale
+extern unsigned long int temp; //A temp variable
 
 
 bool GetHitNum(char *address);
-void GetHitRate(void);
+void GetHitRate();
 bool IsHit(std::bitset<32> flags);
 void GetReplace(std::bitset<32> flags);
 void GetRead(std::bitset<32> flags);
 void GetWrite();
 
-void InitVariables(void);
-void GetInput(void);
-void CalcInfo(void);
-void CreateCache(void);
-void FileTest(void);
-void PrintOutput(void);
+void InitVariables();
+
+/**
+ * get input information
+ */
+void GetInput();
+void CalcInfo();
+void CreateCache();
+void FileTest();
+
+/**
+ * output the result
+ */
+void PrintOutput();
 
 void LruHitProcess();
 void LruUnhitSpace();

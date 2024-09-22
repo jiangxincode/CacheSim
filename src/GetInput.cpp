@@ -141,12 +141,12 @@ void getWritePolicy()
 	}
 }
 
-void GetInput(void)
+void GetInput()
 {
 	getCacheSize();
 	getCacheLineSize();
 	getMappingMethod();
-	if (t_assoc == direct_mapped) //If the associativity_way is direct_mapped,the replacement polacy can be none only;
+	if (t_assoc == direct_mapped) //If the associativity_way is direct_mapped,the replacement policy can be none only;
 	{
 		t_replace = none;
 		getWritePolicy();

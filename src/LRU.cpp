@@ -8,7 +8,7 @@ void LruHitProcess() // if the replacement policy is LRU,and hit
     {
         for(i=0; i<i_num_line; i++)
         {
-            if(LRU_priority[i]<LRU_priority[current_line] && cache_item[current_line][30]==true)
+            if(LRU_priority[i]<LRU_priority[current_line] && cache_item[current_line][30])
             {
                 LRU_priority[i]++; // 如果该行比正在访问的行计数器值小，并且该行中hit为true
             }
@@ -20,7 +20,7 @@ void LruHitProcess() // if the replacement policy is LRU,and hit
     {
         for(i=(current_set*i_cache_set); i<((current_set+1)*i_cache_set); i++)
         {
-            if(LRU_priority[i]<LRU_priority[current_line] && cache_item[current_line][30]==true)
+            if(LRU_priority[i]<LRU_priority[current_line] && cache_item[current_line][30])
             {
                 LRU_priority[i]++; // 如果该行比正在访问的行计数器值小，并且该行中hit为true
             }
@@ -36,7 +36,7 @@ void LruUnhitSpace() // if the replacement policy is LRU,and not hit,but there h
     {
         for(i=0; i<i_num_line; i++)
         {
-            if(cache_item[current_line][30]==true)
+            if(cache_item[current_line][30])
             {
                 LRU_priority[i]++; // 如果该行该行中hit为true
             }
@@ -48,7 +48,7 @@ void LruUnhitSpace() // if the replacement policy is LRU,and not hit,but there h
     {
         for(i=(current_set*i_cache_set); i<((current_set+1)*i_cache_set); i++)
         {
-            if(cache_item[current_line][30]==true)
+            if(cache_item[current_line][30])
             {
                 LRU_priority[i]++; // 如果该行该行中hit为true
             }
