@@ -2,6 +2,16 @@
 
 [![Build and Release](https://github.com/jiangxincode/CacheSim/actions/workflows/BuildAndRelease.yml/badge.svg)](https://github.com/jiangxincode/CacheSim/actions/workflows/BuildAndRelease.yml)
 
+[Deutsch](https://zdoc.app/de/jiangxincode/CacheSim) | 
+[English](https://zdoc.app/en/jiangxincode/CacheSim) | 
+[Español](https://zdoc.app/es/jiangxincode/CacheSim) | 
+[français](https://zdoc.app/fr/jiangxincode/CacheSim) | 
+[日本語](https://zdoc.app/ja/jiangxincode/CacheSim) | 
+[한국어](https://zdoc.app/ko/jiangxincode/CacheSim) | 
+[Português](https://zdoc.app/pt/jiangxincode/CacheSim) | 
+[Русский](https://zdoc.app/ru/jiangxincode/CacheSim) | 
+[中文](https://zdoc.app/zh/jiangxincode/CacheSim)
+
 该程序是大学时《计算机组成与系统结构》的编程实验，我早已毕业多年，但是依然收到很多人的邮件咨询，所以简单描述一下。
 
 该程序模拟了Cache的工作原理并通过读取trace文件得到相应的命中率，能够实现直接映射、全相联、组相联三种映射方式，其中全相联和组相联能够实现随机、LRU两种替换策略。目前三种映射方式均采用回写法，但已经定义了其它写策略的接口，可以很容易扩充。程序具有比较强的鲁棒性，能够接受一定范围的错误输入，并能够比较清晰的提示用户输入。
@@ -18,28 +28,12 @@
 
 如果你觉得该程序不满足你的要求，你可以看下另一个程序：<http://pages.cs.wisc.edu/~markhill/DineroIV/>
 
-This program is a programming experiment for my university course "Computer Organization and System Architecture." Although I graduated many years ago, I still receive numerous emails from people seeking information about it. So, let me provide a brief description.
-
-This program simulates the operation of a cache and calculates the corresponding hit rate by reading a trace file. It can implement three mapping methods: direct-mapped, fully associative, and set associative. Among these, the fully associative and set associative mappings support two replacement strategies: random and LRU. Currently, all three mapping methods use a write-back policy, but I have defined interfaces for other write policies for easy expansion. The program is robust and can handle a certain range of input errors, providing clear prompts for users.
-
-I have tried to keep unnecessary code to a minimum, limiting it to under 1000 lines. Since the primary purpose is to simulate cache operation, I didn't focus much on performance. For example, reading 300,000 lines of memory addresses will take a long time when using a fully associative mapping. Any optimization assistance is welcome.
-
-The program is written in standard C++ without third-party dependencies and supports Windows, Linux, and MacOS. It uses some classes from the C++11 standard, like `bitset<T>`, so it must be compiled on a C++11-supporting compiler, which most major compilers like GCC and VS already do. The program's encoding is in UTF-8.
-
-If you only want to view the final data results and don't care about the specific hit details, please keep the `#define NDEBUG // For NDEBUG pattern` in the base.h file; otherwise, the program will take a long time to run.
-
-For more background and explanations about this program, please refer to the `Materials` folder, and for test data, consult the `TestData` folder.
-
-If you have any questions about the program, such as compilation or runtime issues on your machine, you can submit an issue on GitHub with your compilation environment and error logs.
-
-If you feel that this program doesn't meet your requirements, you can check out another program at <http://pages.cs.wisc.edu/~markhill/DineroIV/>.
-
-## How to build
+## 如何构建
 
 * `cmake -B build`
 * `cmake --build build`
 
-## How to get TRACE file
+## 如何获取Trace文件
 
 * cse240a Project 1: Cache Simulator: <http://cseweb.ucsd.edu/classes/fa07/cse240a/project1.html>
 * Intel Pin基础: <https://www.cnblogs.com/long123king/p/3635408.html>
@@ -47,7 +41,7 @@ If you feel that this program doesn't meet your requirements, you can check out 
 
 ## License
 
-+ The MIT License (MIT) <http://mit-license.org/>
+* The MIT License (MIT) <http://mit-license.org/>
 
 ## 版本改动
 
@@ -65,4 +59,3 @@ If you feel that this program doesn't meet your requirements, you can check out 
 * Version 0.22:删除了不必要信息，比如作者信息，退出信息;重新format代码;删除不必要的using namespace std;
 * Version 0.23:merge部分文件
 * Version 0.30:optimization
-
